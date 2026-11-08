@@ -1,0 +1,16 @@
+{
+  "name": "gridlock-puzzle-co",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Gridlock Puzzle Co. storefront, puzzle generator and in-browser puzzle player.",
+  "scripts": {
+    "generate": "node build/generate.js",
+    "verify": "node build/verify.js",
+    "build": "node build/site.js && node build/check-site.js",
+    "all": "node build/generate.js && node build/verify.js && node build/site.js && node build/check-site.js",
+    "serve": "node build/serve.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

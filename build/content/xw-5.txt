@@ -1,0 +1,682 @@
+# Crossword vocabulary, 5 letters. Written for Gridlock Puzzle Co. from the team's own vocabulary.
+# ANSWER|standard clue|harder clue
+ABBEY|Monastery or convent|Where monks might keep the bells
+ABOUT|Concerning|Roughly, or regarding
+ABOVE|Overhead|Higher than
+ACORN|Seed of an oak|Small cap-wearer under a big tree
+ACTOR|Performer on stage|One who plays for a living
+ADAPT|Adjust to new conditions|Rework a novel for the screen
+ADMIT|Confess|Let in
+ADOPT|Take on as your own|Choose to follow, as a policy
+ADORE|Love deeply|Think the world of
+ADULT|Grown-up|Ticket category above child
+AFTER|Following|Later than
+AGAIN|Once more|From the top
+AGILE|Quick and nimble|Light on one's feet
+AGREE|Share the same view|Say yes
+AHEAD|In front|Leading
+AISLE|Passage between rows of seats|Where a shopper pushes a cart
+ALARM|Warning signal|Clock feature you may snooze
+ALBUM|Collection of photos or songs|Record, in a sleeve
+ALERT|Watchful|Heads-up message
+ALIKE|Similar|Peas in a pod, so to speak
+ALIVE|Living|Buzzing with activity
+ALLEY|Narrow lane|Bowling lane, or back street
+ALLOW|Permit|Let
+ALOFT|Up in the air|Where sails are set
+ALONE|By yourself|Solo
+ALONG|Forward|Lengthwise
+ALOUD|So others can hear|How a story is read at bedtime
+ALPHA|First Greek letter|The first of many, in a sense
+AMBER|Fossilized tree resin|Middle traffic light
+AMPLE|Plenty|More than enough
+AMUSE|Make laugh|Tickle, figuratively
+ANGLE|Corner measure|Point of view
+ANKLE|Joint above the foot|Where a sock may stop
+APPLE|Orchard fruit|Fruit of the bough, often bobbed for
+APRON|Kitchen garment|Area of an airport where planes park
+ARENA|Stadium|Field of activity
+ARGUE|Disagree loudly|Make a case
+ARISE|Get up|Come about
+AROMA|Pleasant smell|Bakery's welcome
+ARROW|Pointer|Sign for which way to go
+ASIDE|To one side|Stage whisper
+ASSET|Valuable thing|Strong point
+ATLAS|Book of maps|Book that covers the world
+ATTIC|Room under the roof|Top-floor storage
+AUDIO|Sound|Recording without pictures
+AVOID|Keep away from|Steer clear of
+AWAKE|Not sleeping|Up and about
+AWARD|Prize|Grant
+AWARE|Conscious|In the know
+BACON|Breakfast strips|Brought home, in a phrase
+BADGE|Pin-on emblem|Scout's reward for a skill
+BAGEL|Ring-shaped roll|Boiled-then-baked bread
+BAKER|Bread maker|Early riser who works with rising dough
+BASIC|Fundamental|Bare-bones
+BASIN|Sink|Area drained by a river
+BATCH|Group made at one time|Tray of cookies
+BEACH|Sandy shore|Seaside strip
+BEARD|Facial hair|Chin growth
+BEGIN|Start|Set off
+BEING|Living creature|Existence
+BELOW|Underneath|Lower than
+BENCH|Long seat|Park seat
+BERRY|Small juicy fruit|Bramble's offering
+BIRCH|Tree with white bark|Tree with peeling bark
+BLAND|Lacking flavor|Like unsalted porridge
+BLANK|Empty|Unfilled space
+BLAZE|Bright fire|Mark a trail
+BLEND|Mix together|Coffee mixture
+BLINK|Close and open the eyes|Quick shut-eye, very quick
+BLOCK|Solid piece|Street segment
+BLOOM|Flower|Rosy glow on a cheek
+BLUSH|Turn pink|Rosy reaction to praise
+BOARD|Plank|Get on a train
+BOAST|Brag|Talk oneself up
+BONUS|Extra payment|Something added on top
+BOOTH|Small stall|Ticket seller's enclosure
+BOUND|Tied up|Leap
+BRAIN|Organ in the skull|Bright person, informally
+BRAKE|Car stopper|Slow down
+BRASS|Yellow metal|Section with trumpets
+BRAVE|Courageous|Face boldly
+BREAD|Loaf|Sandwich maker's supply
+BREAK|Snap|Recess
+BRICK|Building block|Kind of red
+BRIDE|Woman getting married|Star of a wedding
+BRIEF|Short|Lawyer's document
+BRINE|Salty water|Pickling liquid
+BRING|Carry along|Fetch
+BRISK|Quick and lively|Bracing, as a morning
+BROAD|Wide|Wide-ranging
+BROOK|Small stream|Babbling water
+BROOM|Sweeping brush|Sweeper
+BROTH|Thin soup|Stock
+BRUSH|Painter's tool|Brief encounter
+BUDGE|Move slightly|Give way
+BUILD|Construct|Physique
+BUNCH|Cluster|Bouquet
+CABIN|Small wooden house|Plane interior
+CABLE|Thick wire|Kind of knit
+CACAO|Bean used for chocolate|Tree of chocolate fame
+CAMEL|Desert animal with humps|Ship of the desert
+CANAL|Man-made waterway|Narrowboat route
+CANDY|Sweets|Treat in a wrapper
+CANOE|Paddled boat|Light craft for rapids
+CARGO|Goods carried by ship|Freight
+CAROL|Holiday song|Seasonal sing
+CARRY|Hold and move|Transport
+CATCH|Grab in the air|Hidden snag
+CEDAR|Fragrant evergreen|Chest wood
+CHAIN|Linked metal|Group of stores
+CHAIR|Seat with a back|Preside over
+CHALK|Writing stick for a board|Blackboard stick
+CHARM|Appeal|Bracelet trinket
+CHART|Graph|Map for sailors
+CHEEK|Side of the face|Nerve
+CHESS|Game with knights and bishops|Board game of checkmate
+CHEST|Large box|Torso front
+CHIEF|Leader|Main
+CHILD|Young person|Kid
+CHILL|Coldness|Relax, informally
+CHIME|Bell sound|Ring
+CHIRP|Bird call|Cricket's call
+CHORD|Notes played together|Line across a circle
+CHORE|Household task|Job you'd rather skip
+CIDER|Apple drink|Pressed orchard drink
+CINCH|Easy task|Snap, figuratively
+CIVIC|Of a city|Municipal
+CLAIM|Assert|Stake
+CLASP|Fastener|Hold tightly
+CLASS|Group of students|Style
+CLEAN|Not dirty|Spotless
+CLEAR|Transparent|Obvious
+CLERK|Office worker|Desk attendant
+CLICK|Short sharp sound|Mouse press
+CLIFF|Steep rock face|Sheer drop
+CLIMB|Go up|Ascend
+CLOAK|Cape|Hide
+CLOCK|Timepiece|Time with a stopwatch
+CLOSE|Shut|Near
+CLOTH|Fabric|Material
+CLOUD|Sky puff|Storage on the internet
+CLOVE|Spice from a dried bud|Garlic segment
+CLOWN|Circus joker|Fool around
+COACH|Trainer|Long-distance bus
+COAST|Seashore|Glide without pedaling
+COCOA|Hot chocolate|Bean drink
+COMET|Icy space wanderer|Sky streak with a tail
+COMIC|Funny|Joke teller
+CORAL|Reef builder|Pinkish orange
+COUCH|Sofa|Express in certain words
+COUNT|Number|Matter
+COURT|Tennis venue|Woo
+COVER|Lid|Insure
+CRAFT|Skill|Boat
+CRANE|Lifting machine|Wading bird
+CRATE|Wooden box|Shipping box
+CRAWL|Move on hands and knees|Swimming stroke
+CREAM|Top of the milk|The best part
+CREEK|Small stream|Brook
+CREST|Top of a wave|Coat of arms emblem
+CRISP|Crunchy|Sharp and clear
+CROWD|Throng|Pack in
+CROWN|Royal headwear|Top of a tooth
+CRUMB|Bread bit|Morsel
+CRUST|Pie shell|Earth's outer layer
+CURVE|Bend|Pitch that breaks
+CYCLE|Bicycle|Round of events
+DAILY|Every day|Newspaper published every morning
+DAIRY|Milk farm|Cheese and yogurt aisle
+DAISY|White flower|Flower whose petals answer questions
+DANCE|Move to music|Ball event
+DECAF|Coffee without the buzz|Brew with the kick removed
+DECOR|Interior style|Room's look
+DELTA|River mouth|Fourth Greek letter
+DENIM|Jeans fabric|Blue twill
+DEPOT|Storage place|Bus station
+DEPTH|Deepness|Profundity
+DIARY|Daily journal|Private record
+DINER|Casual restaurant|Restaurant guest
+DITCH|Trench|Abandon
+DIVER|Underwater swimmer|One who goes off the deep end
+DIZZY|Lightheaded|Spinning
+DODGE|Avoid|Sidestep
+DOUGH|Bread mixture|Money, informally
+DOZEN|Twelve|Egg carton count
+DRAFT|First version|Cool breeze indoors
+DRAIN|Sink outlet|Use up
+DRAMA|Play|Excitement
+DREAM|Night vision|Aspiration
+DRESS|Gown|Put on clothes
+DRIFT|Float along|Snow pile
+DRILL|Boring tool|Practice routine
+DRINK|Beverage|Sip
+DRIVE|Steer a car|Ambition
+DWELL|Live|Linger (on)
+EAGER|Keen|Raring to go
+EAGLE|Large bird of prey|Golf score of two under par
+EARLY|Before the usual time|Ahead of schedule
+EARTH|Our planet|Soil
+EASEL|Artist's stand|Painting prop
+EIGHT|Number of legs on a spider|Octet
+ELBOW|Arm joint|Nudge
+EMBER|Glowing coal|Fire's last glow
+EMPTY|Containing nothing|Hollow
+ENJOY|Delight in|Relish
+ENTER|Go in|Type in
+ENTRY|Way in|Item in a diary
+EQUAL|The same|Match
+ERASE|Rub out|Wipe clean
+ESSAY|Short composition|Attempt
+EVENT|Happening|Competition
+EVERY|Each|All
+EXACT|Precise|Spot-on
+EXIST|Be|Live
+EXTRA|Additional|Background actor
+FABLE|Moral tale|Story with talking animals
+FACET|Side of a gem|Aspect
+FAINT|Weak|Barely visible
+FAIRY|Magical being with wings|Tooth collector of legend
+FAITH|Trust|Belief
+FANCY|Elaborate|Take a liking to
+FARCE|Comic play|Ridiculous situation
+FEAST|Banquet|Big meal
+FENCE|Barrier around a yard|Sit on it to avoid choosing sides
+FERRY|Boat for crossings|Carry across water
+FETCH|Go and get|What a dog does with a stick
+FEVER|High temperature|Frenzy
+FIBER|Thread|Roughage
+FIELD|Meadow|Area of study
+FIFTY|Half a hundred|Number of states in the US
+FINAL|Last|Championship match
+FLAIR|Natural talent|Style
+FLAME|Blaze|Old love
+FLASH|Quick light|Instant
+FLASK|Bottle|Lab container
+FLEET|Group of ships|Fast
+FLOAT|Stay on the surface|Parade vehicle
+FLOCK|Group of sheep|Gather
+FLOOD|Overflow|Deluge
+FLOOR|Ground surface of a room|Level of a building
+FLOUR|Powder ground from grain|Bread base
+FLUTE|Woodwind instrument|Champagne glass
+FOCUS|Concentrate|Center of attention
+FOGGY|Misty|Vague
+FORGE|Blacksmith's workshop|Move ahead steadily
+FORTY|Four tens|Tennis score after thirty
+FORUM|Discussion place|Public square, in ancient Rome
+FOUND|Discovered|Establish
+FRAME|Picture border|Structure
+FRESH|New|Cheeky
+FRONT|Forward part|Weather boundary
+FROST|Ice crystals|Icing on a cake
+FRUIT|Apple or pear|Result
+FUDGE|Soft candy|Fake, as figures
+FUNNY|Amusing|Odd
+GAUGE|Measure|Dial
+GEESE|Honking birds|Flying V
+GHOST|Spirit|Write for someone else
+GIANT|Huge|Fairy-tale big one
+GLASS|Window material|Drinking vessel
+GLAZE|Shiny coating|Pottery finish
+GLEAM|Shine|Twinkle
+GLIDE|Slide smoothly|Soar
+GLOBE|Sphere|World map
+GLOOM|Darkness|Low mood
+GLORY|Fame|Splendor
+GLOVE|Hand covering|Mitt
+GOOSE|Honking bird|Prod playfully
+GRACE|Elegance|Period allowed before a late fee
+GRADE|Level|Mark on a test
+GRAIN|Wheat or oats|Wood's pattern
+GRAND|Magnificent|Piano type
+GRANT|Give|Funding award
+GRAPE|Vine fruit|Raisin source
+GRAPH|Chart|Plot
+GRASP|Grip|Understand
+GRASS|Lawn plant|Meadow green
+GRAVY|Meat sauce|Something extra
+GREEN|Color of grass|Golf target area
+GREET|Welcome|Say hello to
+GRILL|Barbecue|Question closely
+GROVE|Small wood|Orchard
+GUARD|Protector|Shield
+GUESS|Estimate|Hunch
+GUEST|Visitor|Invitee
+GUIDE|Leader|Handbook
+HABIT|Routine|Monk's garment
+HANDY|Useful|Close at hand
+HAPPY|Glad|Content
+HAVEN|Safe place|Refuge
+HEART|Organ that pumps|Core
+HEAVY|Weighty|Serious
+HEDGE|Row of bushes|Avoid committing
+HELLO|Greeting|Word on a name tag sticker
+HERON|Wading bird|Long-legged fisher
+HINGE|Door pivot|Depend
+HOBBY|Pastime|Leisure pursuit
+HONEY|Bee product|Sweetheart
+HONOR|Respect|Privilege
+HORSE|Riding animal|Gym vaulting apparatus
+HOTEL|Lodging|Place for a stay
+HOUND|Hunting dog|Pester
+HOUSE|Home|Lodge
+HUMID|Damp and warm|Sticky, weather-wise
+HUMOR|Comedy|Indulge
+IDEAL|Perfect|Model
+IGLOO|Snow house|Domed shelter
+IMAGE|Picture|Reputation
+INDEX|List at the back of a book|Finger next to the thumb
+INNER|Inside|Private
+INPUT|Contribution|Data entered
+IRONY|Wry humor|Unexpected twist
+IVORY|Off-white|Piano key, once
+JELLY|Fruit spread|Wobbly dessert
+JEWEL|Gem|Treasure
+JOINT|Shared|Connection
+JOLLY|Cheerful|Merry
+JUDGE|Court official|Assess
+JUICE|Fruit drink|Energy
+JUMBO|Very large|Extra-large
+KAYAK|Covered canoe|Solo paddler's boat
+KEBAB|Skewered meat|Food on a stick
+KNACK|Talent|Gift
+KNEAD|Work dough|Massage
+KNIFE|Cutting utensil|Butter spreader
+KNOCK|Rap on a door|Criticize
+KOALA|Australian tree-dweller|Eucalyptus eater
+LABEL|Tag|Brand
+LADLE|Soup spoon|Serving scoop
+LARGE|Big|Ample
+LASER|Concentrated light beam|Pointer for a presenter
+LATER|Afterward|See you
+LAUGH|Chuckle|Giggle
+LAYER|Tier|Hen
+LEAFY|Full of foliage|Like a shady lane
+LEARN|Study|Find out
+LEASE|Rental agreement|Rent out
+LEASH|Dog lead|Restraint
+LEAST|Smallest amount|Minimum
+LEDGE|Shelf|Window sill
+LEMON|Sour fruit|Dud
+LEVEL|Flat|Floor
+LEVER|Bar for lifting|Handle
+LIGHT|Not heavy|Lamp
+LILAC|Pale purple|Spring shrub
+LINEN|Fine cloth|Bed sheets
+LINER|Ocean ship|Lining
+LLAMA|Andean animal|Woolly pack animal
+LOCAL|Nearby|Resident
+LODGE|Cabin|Stay
+LOFTY|High|Noble
+LOGIC|Reasoning|Sense
+LOOSE|Not tight|Free
+LOTUS|Pond flower of Asia|Cross-legged yoga pose
+LOYAL|Faithful|True
+LUCKY|Fortunate|Charmed
+LUNAR|Of the moon|Moon-related
+LUNCH|Midday meal|Bite at noon
+MAGIC|Sorcery|Wonderful
+MAJOR|Important|Main subject at college
+MANGO|Tropical fruit|Orange-fleshed fruit
+MANOR|Country house|Estate home
+MAPLE|Syrup tree|Leaf on Canada's flag
+MARCH|Walk in step|Third month
+MARSH|Wetland|Swamp
+MATCH|Game|Fire starter
+MEDAL|Award|Prize disc
+MELON|Large fruit|Cantaloupe
+MERIT|Worth|Deserve
+MERRY|Jolly|Cheerful
+METAL|Iron or tin|Loud rock genre
+METER|Measuring device|Rhythm of a poem
+MIDST|Middle|Center
+MINOR|Small|Underage person
+MINUS|Less|Drawback
+MODEL|Example|Fashion poser
+MOIST|Damp|Like a good cake
+MONTH|Calendar division|Moon's span
+MORAL|Lesson|Ethical
+MOTEL|Roadside inn|Highway hotel
+MOTTO|Saying|Slogan
+MOUND|Hill|Pile
+MOUSE|Small rodent|Computer pointer
+MOUTH|Lips' location|River's end
+MOVIE|Film|Picture
+MUDDY|Dirty|Unclear
+MURAL|Wall painting|Painted wall
+MUSIC|Melody|Tunes
+NERVE|Courage|Gall
+NEVER|Not ever|At no time
+NIGHT|Dark hours|Evening
+NOBLE|Aristocrat|Honorable
+NOISE|Sound|Din
+NORTH|Compass point|Up on a map
+NOTCH|Nick|Level
+NOVEL|Book|New
+NURSE|Carer|Tend
+NYLON|Synthetic fabric|Stocking material
+OASIS|Desert spring|Haven
+OCEAN|Sea|Big body of water
+OFFER|Propose|Bid
+OFTEN|Frequently|Many times
+OLIVE|Martini garnish|Peace branch
+ONION|Tear-inducing vegetable|Layered bulb
+OPERA|Musical drama|Sung performance
+ORBIT|Path around a planet|Circle
+ORDER|Command|Sequence
+OTHER|Different|Alternative
+OTTER|River mammal|Playful swimmer
+OUNCE|Small weight|Tiny amount
+OUTER|External|Exterior
+OWNER|Possessor|Holder
+OZONE|Atmosphere layer|Fresh air, informally
+PAINT|Color|Coat
+PANDA|Bamboo eater|Black-and-white bear
+PANEL|Board|Committee
+PAPER|Writing sheet|Newspaper
+PARTY|Celebration|Group
+PASTA|Spaghetti|Italian staple
+PASTE|Glue|Copy and ___
+PATCH|Repair piece|Plot
+PATIO|Terrace|Outdoor area
+PAUSE|Stop briefly|Break
+PEACE|Calm|Harmony
+PEACH|Fuzzy fruit|Delight
+PEARL|Oyster gem|Treasure
+PEDAL|Bike lever|Foot control
+PENNY|Cent|Small coin
+PERCH|Bird's roost|Fish
+PETAL|Flower part|Rose piece
+PHASE|Stage|Period
+PHONE|Telephone|Call
+PHOTO|Picture|Snapshot
+PIANO|Keyboard instrument|Softly, in music
+PILOT|Plane flyer|Test run
+PITCH|Throw|Tone
+PIZZA|Italian pie|Delivery food
+PLACE|Location|Put
+PLAIN|Simple|Prairie
+PLANE|Aircraft|Flat surface
+PLANT|Flower or shrub|Factory
+PLATE|Dish|Home ___
+PLAZA|Square|Mall
+PLUSH|Luxurious|Velvety
+POINT|Tip|Purpose
+POLAR|Arctic|Opposite
+POLKA|Lively dance|Dot pattern
+PORCH|Veranda|Front step area
+POUCH|Small bag|Kangaroo's pocket
+POUND|Unit of weight|Currency of the United Kingdom
+POWER|Strength|Energy
+PRESS|Push|Newspapers
+PRIDE|Self-respect|Group of lions
+PRIME|Main|Number divisible only by itself and one
+PRINT|Type|Copy
+PRISM|Light splitter|Rainbow maker
+PRIZE|Award|Treasure
+PROOF|Evidence|Test copy
+PROUD|Pleased|Lofty
+PROVE|Show to be true|Rise, as dough
+PULSE|Heartbeat|Lentil or bean
+PUPIL|Student|Eye's center
+PUPPY|Young dog|Pup
+PURSE|Handbag|Prize money
+QUACK|Duck sound|Fake doctor
+QUEEN|Monarch|Chess piece
+QUEST|Search|Mission
+QUEUE|Line|Wait in line
+QUICK|Fast|Swift
+QUIET|Silent|Calm
+QUILT|Bedcover|Patchwork
+QUOTA|Share|Allowance
+RADAR|Tracking system|Detection device
+RADIO|Wireless|Broadcast
+RAINY|Wet|Showery
+RAISE|Lift|Increase
+RALLY|Recover strongly|Long exchange in tennis
+RANCH|Farm|Dressing
+RANGE|Scope|Mountain chain
+RAPID|Fast|Swift
+RAVEN|Black bird|Dark-haired
+REACH|Arrive|Extent
+READY|Prepared|Set
+REALM|Kingdom|Domain
+REIGN|Rule|Monarchy
+RELAX|Unwind|Ease
+REPLY|Answer|Respond
+RIDGE|Mountain crest|Hill line
+RIGHT|Correct|Not left
+RINSE|Wash|Clean
+RIPEN|Mature|Develop
+RIVAL|Competitor|Opponent
+RIVER|Stream|Waterway
+ROAST|Cook in the oven|Tease
+ROBIN|Red-breasted bird|Songbird
+ROBOT|Machine|Automaton
+ROCKY|Stony|Rough
+ROUND|Circular|Stage
+ROUTE|Path|Course
+ROYAL|Regal|Noble
+RULER|Measuring stick|King
+RURAL|Countryside|Rustic
+SALAD|Leafy dish|Mix of greens
+SALON|Hair studio|Gathering
+SAUCE|Gravy|Condiment
+SCALE|Weighing device|Plate on a fish's skin
+SCARF|Neck wrap|Muffler
+SCENE|View|Part of a play
+SCENT|Smell|Trail
+SCONE|Tea cake|Biscuit
+SCOOP|Ladle|Exclusive
+SCORE|Points|Twenty
+SCOUT|Explorer|Search
+SHADE|Shadow|Hue
+SHAPE|Form|Mold
+SHARE|Portion|Divide
+SHARP|Keen|Clever
+SHEEP|Woolly animal|Flock member
+SHELF|Rack|Ledge
+SHELL|Casing|Seashore find
+SHINE|Glow|Polish
+SHIRT|Top|Blouse
+SHORE|Coast|Beach
+SHORT|Brief|Small
+SHOUT|Yell|Call
+SIGHT|Vision|View
+SKATE|Glide on ice|Flat fish
+SKILL|Ability|Talent
+SLATE|Rock|Schedule
+SLEEP|Rest|Slumber
+SLICE|Piece|Cut
+SLIDE|Glide|Playground fixture
+SLOPE|Incline|Ski run
+SMALL|Little|Tiny
+SMART|Clever|Stylish
+SMILE|Grin|Beam
+SMOKE|Fumes|Haze
+SNACK|Light bite|Nibble
+SNAIL|Slow mover|Shelled creature
+SNAKE|Serpent|Slither
+SOLAR|Of the sun|Sun-powered
+SOLID|Firm|Hard
+SOUND|Noise|Healthy
+SOUTH|Compass point|Down on a map
+SPACE|Room|Cosmos
+SPARE|Extra|Save
+SPARK|Flash|Ignite
+SPEAK|Talk|Say
+SPEED|Pace|Velocity
+SPELL|Charm|Period
+SPEND|Pay out|Use up
+SPICE|Seasoning|Zest
+SPINE|Backbone|Book's edge
+SPOON|Utensil|Ladle
+SPORT|Game|Good loser
+SPRAY|Mist|Spritz
+SQUAD|Team|Group
+STACK|Pile|Heap
+STAFF|Employees|Walking stick
+STAGE|Platform|Phase
+STAIR|Step|Flight part
+STALL|Booth|Delay
+STAMP|Postage|Stomp
+STAND|Rise|Booth
+STARE|Gaze|Look hard
+START|Begin|Outset
+STEAM|Vapor|Energy
+STEEL|Strong metal|Brace
+STEEP|Sheer|Soak, as tea
+STERN|Strict|Back of a boat
+STICK|Twig|Adhere
+STILL|Motionless|Yet
+STONE|Rock|Fruit pit
+STOOL|Seat|Bar seat
+STORE|Shop|Keep
+STORM|Tempest|Rage
+STORY|Tale|Floor
+STOVE|Cooker|Range
+STRAW|Dried stalks of grain|Drinking tube
+STRIP|Band|Remove
+STUDY|Learn|Den
+STYLE|Fashion|Manner
+SUGAR|Sweetener|Honey
+SUITE|Set of rooms|Musical piece
+SUNNY|Bright|Cheerful
+SUPER|Great|Excellent
+SURGE|Rush|Swell
+SWEEP|Brush|Clean
+SWEET|Sugary|Kind
+SWIFT|Fast|Bird
+SWING|Sway|Playground fixture
+TABLE|Desk|Chart
+TASTE|Flavor|Style
+TEACH|Instruct|Educate
+TEETH|Molars and incisors|Comb features
+TEMPO|Speed|Rhythm
+TENSE|Tight|Verb form
+TENTH|One part in ten|Ordinal after ninth
+THEME|Topic|Subject
+THICK|Dense|Wide
+THINK|Ponder|Believe
+THORN|Prickle|Rose spike
+THREE|Trio|Number
+THUMB|Digit|Flick through
+TIDAL|Of the tides|Wave-related
+TIGER|Striped cat|Big cat
+TIMER|Clock|Stopwatch
+TIRED|Weary|Sleepy
+TOAST|Browned bread|Raise a glass to
+TODAY|This day|Now
+TOKEN|Symbol|Coin
+TOPIC|Subject|Theme
+TORCH|Flashlight|Flame
+TOTAL|Sum|Complete
+TOUCH|Feel|Contact
+TOWEL|Drying cloth|Bath linen
+TOWER|Tall building|Spire
+TRACK|Path|Trail
+TRADE|Exchange|Business
+TRAIL|Path|Follow
+TRAIN|Locomotive|Coach
+TREAT|Reward|Delight
+TREND|Fashion|Tendency
+TRIAL|Test|Hearing
+TRICK|Prank|Illusion
+TROUT|Freshwater fish|Fish
+TRUCK|Lorry|Vehicle
+TRULY|Really|Sincerely
+TRUNK|Tree base|Elephant's nose
+TRUST|Faith|Rely
+TRUTH|Fact|Reality
+TULIP|Spring flower|Bulb
+TUNER|Radio dial|Piano expert
+TWEED|Woolen cloth|Fabric
+TWICE|Two times|Double
+TWIST|Turn|Plot surprise
+ULTRA|Extreme|Beyond
+UNCLE|Parent's brother|Relative
+UNDER|Below|Beneath
+UNITY|Oneness|Togetherness
+UNTIL|Up to|Till
+UPPER|Higher|Top
+URBAN|City|Metropolitan
+USUAL|Normal|Typical
+VALID|Legitimate|Sound
+VALUE|Worth|Price
+VAPOR|Steam|Mist
+VAULT|Safe|Leap
+VENUE|Location|Place
+VERSE|Poetry|Stanza
+VIDEO|Film|Recording
+VIOLA|String instrument|Violin's bigger sibling
+VISIT|Call on|Stay
+VITAL|Essential|Crucial
+VIVID|Bright|Clear
+VOCAL|Spoken|Outspoken
+VOICE|Speech|Say
+WAGON|Cart|Station ___
+WAIST|Middle|Midriff
+WATCH|Look|Timepiece
+WATER|Liquid|Irrigate
+WEAVE|Interlace|Knit
+WHALE|Huge mammal|Ocean giant
+WHEAT|Grain|Cereal
+WHEEL|Rotating disk|Tire
+WHITE|Snow color|Pale
+WHOLE|Complete|Entire
+WIDTH|Breadth|Span
+WINDY|Breezy|Gusty
+WORLD|Planet|Globe
+WORTH|Value|Merit
+WRIST|Arm joint|Watch site
+WRITE|Pen|Compose
+YACHT|Sailboat|Luxury boat
+YEARN|Long for|Crave
+YEAST|Leavening|Bread riser
+YIELD|Produce|Give way
+YOUNG|Youthful|Junior
+YOUTH|Adolescence|Teen
+ZEBRA|Striped animal|Crossing type

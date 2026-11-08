@@ -1,0 +1,69 @@
+{
+  "when": "2026-11-08T22:10:52.166Z",
+  "failures": 0,
+  "report": {
+    "daily-grid": {
+      "total": 200,
+      "counts": {
+        "sudoku": 200
+      }
+    },
+    "hidden-lines": {
+      "total": 80,
+      "counts": {
+        "wordsearch": 80
+      }
+    },
+    "cipher-room": {
+      "total": 120,
+      "counts": {
+        "cryptogram": 120
+      }
+    },
+    "deduction-files": {
+      "total": 60,
+      "counts": {
+        "logic": 60
+      }
+    },
+    "ink-and-clue": {
+      "total": 50,
+      "counts": {
+        "crossword": 50
+      }
+    },
+    "variant-sudoku": {
+      "total": 100,
+      "counts": {
+        "sudoku": 100
+      }
+    },
+    "logic-casebook": {
+      "total": 30,
+      "counts": {
+        "logic": 30
+      }
+    },
+    "cartographers-crosswords": {
+      "total": 30,
+      "counts": {
+        "crossword": 30
+      }
+    },
+    "black-label": {
+      "total": 100,
+      "counts": {
+        "sudoku": 40,
+        "cryptogram": 25,
+        "logic": 20,
+        "crossword": 15
+      }
+    },
+    "sample": {
+      "total": 1,
+      "counts": {
+        "crossword": 1
+      }
+    }
+  }
+}

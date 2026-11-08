@@ -1,0 +1,103 @@
+# Crossword vocabulary, 11 letters. Written for Gridlock Puzzle Co. from the team's own vocabulary.
+# ANSWER|standard clue|harder clue
+ACCORDINGLY|As a result|In a fitting way
+ADVENTUROUS|Bold and daring|Keen to try the unfamiliar
+APPRECIATED|Valued|Grew in value, as an asset
+ARRANGEMENT|Plan or setup|Flowers in a vase, or a new version of a song
+ATMOSPHERIC|Full of mood|Relating to the air around a planet
+BACKGROUNDS|Scenes behind the main subject|Life histories, in brief
+BASKETBALLS|Orange balls for the court|What goes through hoops
+BLACKBOARDS|Classroom writing surfaces|Places where chalk meets slate
+BOOKKEEPING|Recording accounts|Word with three double letters in a row
+CAULIFLOWER|White vegetable with florets|Vegetable that looks like a tiny tree cluster
+CELEBRATION|Festive gathering|Party with a reason
+CHANDELIERS|Hanging light fixtures|Crystal-laden lights above a ballroom
+CHOCOLATIER|Maker of fine chocolates|Craftsperson who works with tempered cocoa
+COMFORTABLE|At ease|Like a well-worn pair of slippers
+COMMUNICATE|Share information|Get a message across
+COMPETITION|Contest|Rivalry for a prize
+COMPOSITION|Piece of music|Arrangement of elements in a painting
+CONTINENTAL|Of a large landmass|Kind of breakfast with pastries
+CRANBERRIES|Tart red berries|Bog fruit served with turkey
+DESCRIPTION|Account of something|Word picture
+DISCOVERIES|Finds|What explorers report back
+ELECTRICITY|Power from the grid|What a thrilling performance seems to have in the air
+EMBROIDERED|Decorated with stitches|Embellished, as a story
+ENTERTAINER|Performer|Juggler or comedian, say
+ENVIRONMENT|Surroundings|Natural world
+EXPERIMENTS|Tests in a lab|Tries something new
+EXPLANATION|Reason given|What a teacher offers after a confused look
+EXTRAVAGANT|Lavish|Over the top, spending-wise
+FASCINATING|Very interesting|Spellbinding
+FOOTBRIDGES|Walkways over streams|Crossings for pedestrians only
+FRIENDSHIPS|Close bonds|Relationships built on trust
+FURNISHINGS|Furniture and fittings|What turns a house into a home, decor-wise
+GENTLEWOMAN|Lady of good manners|Courteous woman, in older usage
+GINGERBREAD|Spiced cake or cookie|Material for a holiday house you can eat
+GRANDPARENT|Parent's parent|Older relative on the family tree
+GRASSHOPPER|Leaping insect|Jumper of the meadow
+HANDWRITING|Penmanship|What a graphologist studies
+HONEYSUCKLE|Fragrant climbing plant|Vine whose flowers are sipped for nectar
+HOSPITALITY|Warm welcome for guests|Industry of hotels and restaurants
+HOUSEKEEPER|Person who runs a household|One who keeps things tidy for a living
+HOUSEPLANTS|Indoor greenery|Ferns on the windowsill
+IMAGINATION|Creative mind|Where daydreams come from
+INFORMATION|Facts|What a help desk provides
+INSTRUMENTS|Tools for music|Gauges on a dashboard
+INTERESTING|Engaging|Worth a closer look
+INVESTIGATE|Look into|Probe
+KNICKKNACKS|Small ornaments|Mantelpiece clutter
+LANDSCAPING|Garden design|Shaping the yard
+LIGHTHOUSES|Coastal towers with beacons|Keepers' workplaces
+LOUDSPEAKER|Device for sound|Public address unit
+MARSHMALLOW|Soft white confection|Campfire treat that's toasted
+MATHEMATICS|Study of numbers|Subject with proofs
+MEASUREMENT|Size or amount|Taking of dimensions
+MICROSCOPES|Lab viewers|Instruments for seeing the very small
+MOTORCYCLES|Two-wheeled motor vehicles|Bikes with engines
+MOUNTAINEER|Climber of peaks|Person roped to a partner on a ridge
+NEWSLETTERS|Regular bulletins|Mailings from a club
+NIGHTINGALE|Bird that sings at night|Songbird famed for evening song
+NUTCRACKERS|Tools for shells|Ballet's toy soldiers, in a seasonal sense
+OBSERVATORY|Building with a telescope|Place for looking up professionally
+OPPORTUNITY|Chance|It may knock, they say
+ORCHESTRATE|Arrange for an orchestra|Mastermind
+PAPERWEIGHT|Desk object that holds down sheets|Glass dome on a writing desk
+PARTNERSHIP|Alliance|Business with two owners
+PEPPERMINTS|Cool candies|After-dinner sweets
+PERFORMANCE|Show|How well something works
+PHOTOGRAPHS|Pictures|Snapshots
+PHOTOGRAPHY|Art of the camera|Taking pictures
+POSSIBILITY|Chance|Something that might happen
+PREPARATION|Getting ready|Groundwork
+QUESTIONING|Asking|Doubtful
+RATTLESNAKE|Venomous snake|Snake that warns with its tail
+RECOGNITION|Acknowledgment|Spotting someone familiar
+REFRESHMENT|Snack or drink|Revival
+REMEMBRANCE|Memory|Keepsake
+RESTAURANTS|Places to eat out|Where menus are handed over
+SANDCASTLES|Beach structures|Turrets the tide takes back
+SAXOPHONIST|Jazz musician|Player of a curved horn
+SCHOOLHOUSE|Building for lessons|One-room learning space of old
+SCREWDRIVER|Tool for turning screws|Hand tool with a flat or cross tip
+SENTIMENTAL|Emotional|Mushy
+SKATEBOARDS|Boards with wheels|Decks for street tricks
+SPECTACULAR|Impressive|Show-stopping
+SPRINGBOARD|Diving board|Launching point
+STEAMROLLER|Road-flattening machine|Crush, figuratively
+TABLESPOONS|Large spoons|Recipe measures
+TEMPERATURE|Degree of heat|Thermometer reading
+TRADITIONAL|Customary|Old-fashioned
+TRAMPOLINES|Bouncing mats|Backyard bouncers
+TRANSLATION|Version in another language|Converted text
+TROUBADOURS|Traveling singers|Medieval poet-musicians
+TYPEWRITERS|Old writing machines|Keyboards with ribbons
+UNDERGROUND|Below the surface|Subway, in London
+VOLUNTEERED|Offered freely|Stepped forward
+WALLPAPERED|Covered with paper|Decorated, as a room
+WATERCOLORS|Paints mixed with water|Translucent paintings
+WATERMELONS|Large green fruits|Picnic fruit with black seeds
+WHEELBARROW|Garden cart|One-wheeled load carrier
+WILDFLOWERS|Uncultivated blooms|Meadow colors
+WINDSURFING|Sailboarding|Water sport with a sail
+WOODPECKERS|Birds that drum on trees|Tree tappers

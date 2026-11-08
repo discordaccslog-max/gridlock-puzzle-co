@@ -1,0 +1,12 @@
+{
+  "daily-grid": 200,
+  "hidden-lines": 80,
+  "cipher-room": 120,
+  "deduction-files": 60,
+  "ink-and-clue": 50,
+  "core-collection": 510,
+  "variant-sudoku": 100,
+  "logic-casebook": 30,
+  "cartographers-crosswords": 30,
+  "black-label": 100
+}

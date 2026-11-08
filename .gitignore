@@ -1,0 +1,4 @@
+node_modules/
+generated/gen-log.txt
+.DS_Store
+Thumbs.db

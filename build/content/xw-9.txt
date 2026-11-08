@@ -1,0 +1,200 @@
+# Crossword vocabulary, 9 letters. Written for Gridlock Puzzle Co. from the team's own vocabulary.
+# ANSWER|standard clue|harder clue
+ABUNDANCE|Plentiful supply|More than anyone could use
+ACCORDION|Squeezebox instrument|Instrument that folds and unfolds as it plays
+ADVENTURE|Exciting experience|Quest with an uncertain ending
+AFTERNOON|Time between noon and evening|When tea is traditionally taken
+AIRPLANES|Flying machines|Jets and props
+ALLOWANCE|Regular pocket money|Amount permitted, as baggage
+ALONGSIDE|Next to|Parallel with, as a ship at a dock
+AMBITIOUS|Eager to succeed|Aiming high
+ANTELOPES|Graceful grazing animals|Springboks and gazelles
+APARTMENT|Rented home in a building|Flat, across the pond
+ASTRONOMY|Study of stars and planets|Science that looks up
+ATTENTION|Focus|What a drill sergeant calls for
+AUTOGRAPH|Celebrity's signature|Name a fan asks for
+AVALANCHE|Snow slide|Sudden flood, as of letters
+BACKPACKS|Bags worn on the shoulders|Hiker's carryalls
+BADMINTON|Sport played with a shuttlecock|Game where a birdie crosses a net
+BALLERINA|Female ballet dancer|One who works on her toes
+BEAUTIFUL|Very pretty|Easy on the eyes
+BEGINNING|Start|Square one
+BIOGRAPHY|Life story|Book about someone else's life
+BLUEBERRY|Small dark fruit|Muffin mix-in
+BOOKSHELF|Place for books|Where novels stand in a row
+BOOKSTORE|Shop that sells books|Where to browse the shelves
+BOULEVARD|Wide city street|Avenue lined with trees
+BRILLIANT|Very bright|Dazzling
+BUTTERCUP|Small yellow flower|Meadow bloom held under a chin
+BUTTERFLY|Insect with colorful wings|Swimming stroke with a dolphin kick
+CANDLELIT|Lit by wax lights|Like a romantic dinner, perhaps
+CAPTIVATE|Charm|Hold spellbound
+CARPENTER|Woodworker|Joiner
+CASSEROLE|Baked dish|Dish cooked slowly in the oven
+CELEBRATE|Mark a happy occasion|Party, as a verb
+CHAMOMILE|Herbal tea flower|Daisy-like bloom brewed at bedtime
+CHOCOLATE|Cocoa treat|Bar of dark or milk
+CLASSROOM|Place for lessons|Where a teacher takes attendance
+CLOCKWORK|Mechanism of gears|Running perfectly smoothly, like ___
+COASTLINE|Edge of the land by the sea|Shore as seen on a map
+COLLECTOR|One who gathers items|Stamp enthusiast, perhaps
+COMPANION|Friend|Travel partner
+COMPLETED|Finished|Done and dusted
+CONDUCTOR|Orchestra leader|Ticket checker on a train
+CONFIDENT|Self-assured|Sure of oneself
+CONTINENT|Large landmass|Africa or Asia
+CONTRACTS|Agreements|Shrinks
+CORNFLOUR|Thickener for sauces|Fine maize powder
+COURTYARD|Enclosed open space|Area inside a quadrangle
+CRAFTSMAN|Skilled maker|Artisan
+CROCODILE|Large reptile of the river|Line of children walking in pairs
+CROSSWORD|Puzzle with clues and grid|What you might be solving now
+CUPBOARDS|Kitchen cabinets|Places to keep cups
+DANDELION|Yellow weed|Flower whose seeds are blown away
+DAYDREAMS|Idle thoughts|Reveries
+DECORATED|Adorned|Trimmed, as a tree
+DELICIOUS|Tasty|Mouthwatering
+DETECTIVE|Investigator|Sleuth
+DIFFERENT|Not the same|Distinct
+DIRECTION|Way|Course
+DISCOVERY|Find|Breakthrough
+DRAGONFLY|Insect with four clear wings|Darting pond insect
+DRIFTWOOD|Wood washed ashore|Beachcomber's find
+EDUCATION|Learning|Schooling
+ELABORATE|Detailed|Explain further
+ELEVATION|Height|Altitude
+EMERGENCY|Crisis|Urgent situation
+ENCOURAGE|Support|Cheer on
+ENDURANCE|Stamina|Staying power
+ENGINEERS|Designers of machines|Plans cleverly
+ENJOYMENT|Pleasure|Fun
+EVERGREEN|Tree that keeps its leaves|Timeless, as a song
+EVERYBODY|All people|One and all
+EXCELLENT|Outstanding|First-rate
+EXCHANGES|Swaps|Trades
+EXPLORERS|Discoverers|Travelers into the unknown
+FACTORIES|Plants|Mills
+FAIRYTALE|Magical story|Happily-ever-after story
+FANTASTIC|Wonderful|Out of this world
+FAVORITES|Preferred ones|Top picks
+FIREPLACE|Hearth|Place for logs indoors
+FIREWORKS|Night sky display|Spectacular show
+FISHERMEN|Anglers|People who cast lines
+FLAMINGOS|Pink wading birds|Birds that stand on one leg
+FLASHBACK|Scene from the past|Look back in a film
+FOOTPRINT|Mark left by a foot|Impact, as on the environment
+FORTNIGHT|Two weeks|Fourteen days
+FRAGRANCE|Scent|Perfume
+FREQUENCY|Rate|Radio band
+FURNITURE|Chairs and tables|Fixtures
+GALLERIES|Art spaces|Museums
+GARDENING|Tending plants|Weeding and planting
+GENTLEMAN|Polite man|Courteous one
+GEOGRAPHY|Study of the earth|Lay of the land
+GOLDFINCH|Small yellow bird|Songbird with gold wing bars
+GRASSLAND|Prairie|Meadow
+GUARDIANS|Protectors|Keepers
+GUIDEBOOK|Travel manual|Tourist's companion
+HAILSTONE|Ice pellet|Storm ball
+HAIRBRUSH|Grooming tool|Bristled tool
+HALLOWEEN|October holiday|Night of costumes
+HAMBURGER|Patty in a bun|Burger
+HANDSHAKE|Greeting with palms|Deal sealer
+HAPPINESS|Joy|Contentment
+HARMONICA|Mouth organ|Blues instrument
+HEADLINES|Newspaper titles|Top stories
+HEDGEHOGS|Spiny mammals|Garden visitors
+HIGHLANDS|Mountainous area|Uplands
+HOMEGROWN|Raised locally|Domestic
+HONEYCOMB|Wax cells|Beehive structure
+HOURGLASS|Sand timer|Timer you turn over to restart
+HOUSEBOAT|Floating home|Barge home
+HURRICANE|Tropical storm|Cyclone
+IMPORTANT|Significant|Key
+INCLUSION|Being part of a group|Something added to the mix
+INTERVIEW|Questioning|Conversation
+INVENTION|Creation|Brainchild
+INVISIBLE|Unseen|Hidden
+JELLYFISH|Stinging sea creature|Medusa
+JOURNEYED|Traveled|Voyaged
+KANGAROOS|Hopping marsupials|Joeys' mothers
+KNOWLEDGE|Understanding|Learning
+LANDSCAPE|Scenery|View
+LIGHTNING|Flash in a storm|Bolt
+LIMESTONE|Sedimentary rock|Building stone
+MAGNIFIED|Enlarged|Blown up
+MARMALADE|Orange jam|Breakfast spread
+MARIGOLDS|Orange flowers|Garden blooms
+MELODIOUS|Tuneful|Musical
+MICROWAVE|Quick oven|Zapper
+MOONLIGHT|Lunar glow|Night shine
+MOUNTAINS|High peaks|Ranges
+MUSHROOMS|Edible fungi|Grow quickly
+NECESSARY|Required|Essential
+NECKLACES|Jewelry|Chains
+NEIGHBORS|People next door|Locals
+NIGHTFALL|Dusk|Sunset
+NOTEBOOKS|Writing pads|Journals
+OBSERVANT|Watchful|Alert
+OCCASIONS|Events|Times
+OPERATION|Procedure|Function
+OPPOSITES|Contraries|Reverses
+OPTIMISTS|Hopeful people|Positive thinkers
+ORCHESTRA|Group of musicians|Symphony
+ORNAMENTS|Decorations|Baubles
+OURSELVES|Us|We
+OVERNIGHT|During the night|Sudden
+PAINTINGS|Artworks|Canvases
+PARACHUTE|Skydiver's canopy|Chute
+PARAGRAPH|Section of text|Passage
+PASSENGER|Traveler|Rider
+PASSWORDS|Secret words|Codes
+PATIENTLY|Without hurry|Calmly
+PERFORMER|Entertainer|Artist
+PERMANENT|Lasting|Fixed
+PINEAPPLE|Tropical fruit|Ananas
+PLAYHOUSE|Theater|Wendy house
+POSTCARDS|Holiday mail|Picture cards
+PRINCIPAL|Head teacher|Main
+PROMENADE|Seafront walk|Stroll
+QUICKSAND|Sinking sand|Trap
+RAINCOATS|Waterproof jackets|Macs
+RASPBERRY|Red berry|Rude noise
+RECORDING|Taped performance|Track
+RIVERBANK|Shore of a river|Water's edge
+SATELLITE|Orbiting body|Moon
+SAXOPHONE|Jazz horn|Sax
+SCARECROW|Field guardian|Straw figure
+SCRAPBOOK|Album of clippings|Memory book
+SEASHELLS|Beach finds|Shells
+SENTIMENT|Feeling|Emotion
+SEPTEMBER|Ninth month|Autumn month
+SHOELACES|Shoe ties|Strings
+SIGNATURE|Name in writing|Autograph
+SNOWFLAKE|Ice crystal|Unique crystal
+SOMETHING|An object|Anything
+SOUVENIRS|Mementos|Keepsakes
+SPAGHETTI|Pasta strands|Noodles
+SPRINKLER|Lawn waterer|Garden device that keeps turning
+STAIRCASE|Flight of steps|Stairs
+STARLIGHT|Light from stars|Glow
+STATEMENT|Declaration|Remark
+STOREROOM|Supply room|Pantry
+SUMMARIZE|Sum up|Recap
+SUNFLOWER|Tall yellow flower|Seed head
+SWEETCORN|Yellow vegetable|Maize
+TELESCOPE|Star viewer|Spyglass
+TEMPERATE|Mild|Moderate
+THRILLING|Exciting|Electric
+TIMETABLE|Schedule|Rota
+TRAVELING|Journeying|Moving
+UMBRELLAS|Rain shields|Brollies
+UNIVERSAL|Worldwide|General
+VEGETABLE|Carrot or pea|Produce
+VICTORIES|Wins|Triumphs
+WATERFALL|Cascade|Falls
+WEEKENDER|Short trip bag|Visitor
+WHIRLWIND|Tornado|Rush
+WONDERFUL|Marvelous|Great
+WORKSHOPS|Studios|Seminars
+YESTERDAY|The day before today|Past

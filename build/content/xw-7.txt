@@ -1,0 +1,483 @@
+# Crossword vocabulary, 7 letters. Written for Gridlock Puzzle Co. from the team's own vocabulary.
+# ANSWER|standard clue|harder clue
+ABILITY|Skill or talent|What a natural has
+ABSENCE|Being away|Gap in the attendance record
+ACADEMY|School for special training|Institution with a dress code, often
+ACCOUNT|Bank arrangement|Story, as told by a witness
+ACHIEVE|Accomplish|Pull off
+ACROBAT|Circus tumbler|Performer who flips for a living
+ACTRESS|Female stage performer|Leading lady
+ADDRESS|Where you live|Speech to an audience
+ADVANCE|Move forward|Loan against future pay
+ADVISER|Consultant|Person with counsel to give
+AERIALS|Antennas|Skiing flips and twists
+AIRLINE|Company that flies passengers|Carrier with wings
+AIRPORT|Place with runways|Terminal destination
+ALCOVES|Small recesses in a wall|Nooks
+ALMANAC|Yearly book of facts|Annual with tide tables
+AMAZING|Astonishing|Hard to believe
+AMONGST|In the middle of|Surrounded by
+ANCIENT|Very old|From way back
+ANIMATE|Bring to life|Draw frame by frame
+ANOTHER|One more|A different one
+ANTIQUE|Valuable old object|Heirloom, perhaps
+ANXIOUS|Worried|On edge
+APPLAUD|Clap|Give a hand
+APRICOT|Small orange fruit|Pale orange shade
+ARRANGE|Put in order|Score for an orchestra
+ARRIVAL|Reaching a destination|Board listing at a station
+ARTICLE|Newspaper piece|"A" or "the"
+ARTISAN|Skilled craftsperson|Maker of handmade goods
+ATTEMPT|Try|Go at something
+ATTRACT|Draw in|What magnets do
+AUCTION|Sale by bidding|Where a gavel ends things
+AVERAGE|Typical|Mean
+AWESOME|Wonderful|Inspiring wonder
+BALANCE|Steadiness|What's left in an account
+BALCONY|Platform outside an upper window|Theater's upper seating
+BANDAGE|First-aid wrap|Wrap for a sprain
+BANQUET|Formal feast|Big dinner for many guests
+BARGAIN|Good deal|Haggle
+BASSOON|Low woodwind instrument|Double-reed instrument with a deep voice
+BATTERY|Power cell|Remote control's need
+BEACHES|Sandy shores|Spots for towels and umbrellas
+BEDTIME|Time to sleep|When a story might be read
+BEEHIVE|Home for honey makers|Tall, rounded hairstyle
+BENEATH|Underneath|Below
+BICYCLE|Two-wheeler|Pedal-powered ride
+BISCUIT|Small baked treat|Cracker or cookie, depending on the country
+BLANKET|Bed cover|Covering everything
+BLOSSOM|Flower|Develop beautifully
+BOOKEND|Support at the end of a shelf|Pair partner holding up the classics
+BOUQUET|Bunch of flowers|Wine's aroma
+BRACKET|Shelf support|Tournament chart
+BREADTH|Width|Range of knowledge
+BRIGHTS|High-beam headlights|Vivid colors
+BROTHER|Male sibling|Monk, perhaps
+BUCKETS|Pails|Raining heavily, informally
+BUFFALO|Large bovine animal|Bison, loosely
+BUILDER|Construction worker|Maker of houses
+CABBAGE|Leafy vegetable|Coleslaw base
+CABINET|Cupboard|Display case for china
+CALCIUM|Element in milk and bones|Element numbered twenty
+CAMPING|Sleeping in tents|Outdoor holiday
+CANDLES|Wax lights|Birthday cake features
+CANNERY|Factory for preserving food|Fish-packing plant
+CAPITAL|Seat of government|Upper-case letter
+CAPTAIN|Leader of a team|Skipper
+CARAVAN|Group traveling together|Desert travelers in a line
+CAREFUL|Cautious|Watching one's step
+CARPETS|Floor coverings|Rugs
+CARTOON|Animated film|Comic strip
+CASCADE|Small waterfall|Fall in stages
+CASHIER|Checkout clerk|Person at the register
+CATALOG|List of items|Mail-order book
+CAUTION|Care|Warning
+CEILING|Overhead surface of a room|Upper limit
+CENTRAL|In the middle|Main
+CENTURY|Hundred years|Hundred runs in cricket
+CEREALS|Breakfast grains|Wheat and oats
+CERTAIN|Sure|Particular
+CHAMBER|Room|Orchestra type
+CHANNEL|Waterway|TV station
+CHAPTER|Book section|Part of a story
+CHARITY|Generosity|Good cause
+CHEDDAR|Firm cheese|Crumbly orange cheese
+CHEETAH|Fastest land animal|Spotted sprinter
+CHEMIST|Scientist working with elements|Lab worker
+CHERISH|Treasure|Hold dear
+CHICKEN|Barnyard bird|Coward, informally
+CHIMNEY|Smoke outlet|Stack on the roof
+CLARIFY|Make clear|Explain better
+CLASSIC|Timeless|Great old work
+CLIMATE|Weather pattern|General atmosphere
+CLOSURE|Shutting|Sense of an ending
+CLOTHES|Garments|Wardrobe contents
+CLUSTER|Group|Bunch
+COASTAL|By the sea|Seaside
+COCONUT|Tropical nut|Hairy palm fruit
+COLLEGE|Higher school|Campus
+COMFORT|Ease|Console
+COMMAND|Order|Mastery
+COMMENT|Remark|Note
+COMPACT|Small|Agreement
+COMPANY|Business|Guests
+COMPARE|Weigh up|Liken
+COMPASS|Direction finder|Drawing tool for circles
+COMPOSE|Write music|Calm oneself
+CONCERT|Music show|Performance
+CONDUCT|Lead an orchestra|Behavior
+CONFIRM|Verify|Make sure
+CONSENT|Agreement|Permission
+CONTENT|Satisfied|What's inside
+CONTEST|Competition|Challenge
+CONTROL|Manage|Restraint
+COOKING|Making meals|Food preparation
+COPPERS|Pennies|Reddish metals
+CORRECT|Right|Mark homework
+COSTUME|Outfit for a play|Dress-up clothes
+COTTAGE|Small country house|Cabin
+COUNTER|Kitchen surface|Opposing
+COUNTRY|Nation|Rural area
+COURAGE|Bravery|Nerve
+COUSINS|Relatives on the family tree|Aunts' children
+CRACKER|Thin, crisp biscuit|Holiday party favor that snaps
+CRAWLER|Slow mover|Search engine's robot
+CREATOR|Maker|Originator
+CRICKET|Chirping insect|Game with wickets
+CRUMPET|Spongy griddle cake|Teatime treat with holes
+CRYSTAL|Clear quartz|Fine glassware
+CULTURE|Arts and customs|Bacteria grown in a lab
+CURIOUS|Inquisitive|Strange
+CURRENT|Present|Flow
+CURTAIN|Window drape|End of a performance
+CUSHION|Soft pillow|Padding
+CUSTOMS|Traditions|Border check
+DAMPEST|Most moist|Wettest
+DANCING|Moving to music|Ballroom pursuit
+DAYTIME|Hours of light|Not night
+DECIMAL|Point system|Base ten
+DECLINE|Refuse|Fall
+DEFROST|Thaw|Unfreeze
+DELIGHT|Joy|Please
+DELIVER|Bring|Hand over
+DENTIST|Tooth doctor|One who drills
+DESERTS|Arid regions|Sandy places
+DESSERT|Sweet course|Pudding
+DIAMOND|Precious gem|Baseball field
+DIGITAL|Electronic|Numerical
+DISTANT|Far away|Aloof
+DOLPHIN|Intelligent sea mammal|Clicking swimmer
+DOORWAY|Entrance|Threshold
+DRAWING|Sketch|Raffle
+DRIZZLE|Light rain|Pour slowly over
+DROUGHT|Long dry spell|Water shortage
+DUSTPAN|Sweeping tray|Broom's partner
+EARNING|Making money|Taking home
+EASTERN|Of the east|Where the sun comes up, adjectivally
+ECLIPSE|Blotting out of the sun|Overshadow
+ECONOMY|Thrift|Wealth system
+EDITION|Version of a book|Print run
+ELEVATE|Raise|Uplift
+EMERALD|Green gem|Bright green
+ENGLISH|Language|Spin on a ball
+ENTRANT|Contestant|Competitor
+ENVELOP|Wrap|Surround
+EPISODE|Installment|Incident
+EQUATOR|Earth's midline|Zero latitude
+ESTUARY|River mouth where tide meets stream|Tidal river mouth
+EVENING|Night|Leveling
+EXAMPLE|Instance|Model
+EXCITED|Thrilled|Eager
+EXHIBIT|Display|Show
+EXPLAIN|Clarify|Justify
+EXPLORE|Investigate|Travel around
+EXPRESS|Fast|Say
+FACTORY|Plant|Mill
+FASHION|Style|Shape
+FEATHER|Plume|Light thing
+FESTIVE|Merry|Celebratory
+FICTION|Novels|Untruth
+FIDDLER|Violinist|Crab type
+FIREFLY|Glowing insect|Lightning bug
+FISHING|Angling|Hinting for compliments
+FLANNEL|Soft fabric|Washcloth
+FLOWERS|Blooms|Bouquets
+FOLLOWS|Comes after|Tracks
+FORWARD|Ahead|Send on
+FOREVER|Always|Eternally
+FORTUNE|Luck|Wealth
+FREIGHT|Cargo|Shipment
+FURNACE|Heater|Oven
+GALLERY|Art space|Spectators
+GARDENS|Plots of flowers|Parks
+GARLAND|Wreath|Flower chain
+GATEWAY|Entrance|Portal
+GENERAL|Overall|Broad
+GENUINE|Real|Authentic
+GIRAFFE|Long-necked animal|Tallest mammal
+GLACIER|Ice river|Slow mover
+GLIMPSE|Quick look|Peek
+GLITTER|Sparkle|Shine
+GRAMMAR|Language rules|Syntax
+GRANITE|Hard rock|Countertop stone
+GRAVITY|Force that pulls|Seriousness
+GRIDDLE|Flat pan|Pancake maker
+GROCERY|Food store|Market
+HABITAT|Natural home|Environment
+HAIRCUT|Trim|Style
+HALFWAY|Midway|Middle
+HAMMOCK|Swinging bed|Hanging bed
+HANDFUL|Small amount|Little rascal
+HARBORS|Ports|Shelters
+HARMONY|Agreement|Melody
+HARVEST|Crop gathering|Reap
+HEADING|Title|Direction
+HEARING|Listening|Court session
+HEAVENS|Sky|Firmament
+HELPFUL|Useful|Obliging
+HISTORY|Past events|Record
+HOLIDAY|Vacation|Festival
+HONESTY|Truthfulness|Candor
+HORIZON|Skyline|Edge of the earth
+HOSTESS|Party host|Greeter
+HOUSING|Homes|Casing
+HUNDRED|Number|Century
+ICEBERG|Floating ice|Tip of trouble
+IMAGINE|Picture|Dream up
+IMPROVE|Make better|Upgrade
+INITIAL|First|Letter
+INQUIRY|Question|Investigation
+INSTANT|Moment|Immediate
+INSTEAD|In place of|Alternatively
+JACKETS|Coats|Covers
+JOURNAL|Diary|Magazine
+JOURNEY|Trip|Voyage
+JUSTICE|Fairness|Judge
+KITCHEN|Cooking room|Galley
+KITTENS|Young cats|Litter
+KNITTED|Woolen|Joined
+LANTERN|Lamp|Lighthouse part
+LAUNDRY|Washing|Wash
+LEADING|Ahead|Main
+LEATHER|Hide|Skin
+LECTURE|Talk|Scold
+LEISURE|Free time|Relaxation
+LETTUCE|Salad green|Leaf
+LIBRARY|Book place|Collection
+LIGHTER|Not as heavy|Fire starter
+LIMITED|Restricted|Narrow
+LOBSTER|Shellfish|Red crustacean
+LOCKERS|Storage units|Gym boxes
+LOYALTY|Faithfulness|Devotion
+LUGGAGE|Baggage|Suitcases
+MACHINE|Device|Engine
+MAGNETS|Attracting metals|Pullers
+MAILBOX|Letter box|Post spot
+MANSION|Large house|Estate
+MARBLES|Glass balls|Wits
+MASCOTS|Team symbols|Charms
+MAXIMUM|Most|Ceiling
+MEADOWS|Grasslands|Fields
+MEASURE|Gauge|Step
+MELODIC|Tuneful|Musical
+MESSAGE|Note|Text
+MIDWEST|US region|Heartland
+MILLION|Number|Many
+MINERAL|Ore|Stone
+MINUTES|Meeting record|Notes
+MIRACLE|Wonder|Marvel
+MISSION|Task|Goal
+MIXTURE|Blend|Compound
+MONARCH|Ruler|Butterfly
+MORNING|Early hours|Dawn
+MUSICAL|Melodic|Show
+MYSTERY|Puzzle|Secret
+NATURAL|Normal|Unforced
+NEITHER|Not either|Nor
+NETWORK|System|Web
+NOTABLE|Remarkable|Celebrity
+NOTHING|Zero|Zip
+NURSERY|Plant shop|Kids' room
+OATMEAL|Porridge|Grain dish
+OBSERVE|Watch|Notice
+OBVIOUS|Clear|Plain
+OCTOPUS|Eight-armed creature|Sea creature with ink
+OPINION|View|Belief
+ORANGES|Citrus fruits|Fruits that share a name with a color
+ORCHARD|Fruit farm|Grove
+ORGANIC|Natural|Living
+OSTRICH|Large bird|Fast runner
+OUTDOOR|Open-air|Outside
+OUTLINE|Sketch|Summary
+OVERALL|Total|Broadly
+PACKAGE|Parcel|Bundle
+PAINTER|Artist|Decorator
+PAJAMAS|Sleepwear|Nightclothes
+PANCAKE|Flapjack|Flat
+PARADES|Processions|Shows off
+PARKING|Car space|Lot
+PARSLEY|Herb|Garnish
+PARTNER|Ally|Mate
+PASSAGE|Corridor|Excerpt
+PASSION|Enthusiasm|Love
+PATIENT|Calm and tolerant|One in a waiting room
+PATTERN|Design|Model
+PAYMENT|Fee|Installment
+PEACOCK|Showy bird|Show-off
+PELICAN|Bird with a pouch|Fishing bird
+PENGUIN|Flightless bird|Bird that always seems dressed for dinner
+PERFECT|Flawless|Ideal
+PERFUME|Scent|Fragrance
+PERHAPS|Maybe|Possibly
+PICTURE|Image|Film
+PILGRIM|Traveler|Wayfarer
+PILLOWS|Cushions|Rests
+PIONEER|Trailblazer|Founder
+PLANETS|Worlds|Bodies
+PLASTER|Wall coating|Cast
+PLATEAU|Flat highland|Level
+PLAYFUL|Fun|Mischievous
+PLEASED|Happy|Glad
+POPCORN|Movie snack|Puffed corn
+POPULAR|Liked|Common
+PORTION|Part|Serving
+POSTAGE|Mail fee|Stamps
+POSTERS|Wall art|Prints
+POTTERY|Ceramics|Clay ware
+POULTRY|Fowl|Birds
+PRAIRIE|Grassland|Plain
+PREPARE|Get ready|Arrange
+PRESENT|Gift|Here
+PREVIEW|Advance look|Trailer
+PRIMARY|Main|First
+PRIVATE|Personal|Secret
+PROBLEM|Issue|Question
+PRODUCE|Make|Vegetables
+PROFILE|Side view|Biography
+PROGRAM|Schedule|Show
+PROJECT|Plan|Throw onto a screen
+PROMISE|Pledge|Vow
+PROTECT|Guard|Shield
+PROVIDE|Supply|Give
+PUBLISH|Print|Issue
+PUDDING|Creamy dessert|Where the proof is said to be
+PUMPKIN|Orange squash|Jack-o-lantern starter
+PURPOSE|Aim|Intent
+PYRAMID|Monument at Giza|Shape of a stacked display
+QUALITY|Grade|Trait
+QUARTER|Fourth|District
+RAINBOW|Arc of colors|Spectrum
+RAISINS|Dried grapes|Sweet bits
+READING|Study|Interpretation
+REALITY|Truth|Fact
+RECEIPT|Proof of purchase|Slip
+RECITAL|Concert|Performance
+RECORDS|Archives|Albums
+RECYCLE|Reuse|Process
+REFLECT|Mirror|Ponder
+REFRAIN|Chorus|Hold back
+REGULAR|Normal|Frequent customer
+RELEASE|Free|Launch
+REMAINS|Stays|Ruins
+REMOVAL|Taking away|Clearing out
+REPLACE|Substitute|Return
+REQUEST|Ask|Appeal
+RESERVE|Book|Shyness
+RESPECT|Esteem|Honor
+RESTFUL|Calm|Peaceful
+RETREAT|Withdraw|Getaway
+REUNION|Gathering|Meeting
+REVERSE|Back|Opposite
+REWRITE|Revise|Edit
+RHUBARB|Stalk used in pies|Tart vegetable
+RIDDLES|Puzzles|Brain teasers
+ROOFTOP|Top of a house|Penthouse spot
+ROUTINE|Habit|Act
+RUNNING|Jogging|Operating
+SAILING|Boating|Yachting
+SALTIER|More salty|Briny
+SANDALS|Open shoes|Summer footwear
+SARDINE|Small fish|Packed fish
+SATCHEL|Shoulder bag|School bag
+SATISFY|Please|Fulfill
+SAUSAGE|Meat link|Banger
+SCENERY|Landscape|Backdrop
+SCHOLAR|Learned person|Student
+SCIENCE|Study of nature|Knowledge
+SEAGULL|Coastal bird|Shore bird
+SEASIDE|Coast|Beach
+SECONDS|Extra servings|Time units
+SECTION|Part|Segment
+SEGMENT|Part|Piece
+SERIOUS|Grave|Earnest
+SERVICE|Help|Duty
+SESSION|Meeting|Term
+SETTING|Location|Background
+SEVENTH|Next after sixth|Like the inning with a stretch
+SHALLOW|Not deep|Superficial
+SHELTER|Refuge|Cover
+SHINGLE|Roof tile|Beach pebbles
+SHIPPER|Sender|Carrier
+SHOWERS|Rain|Baths
+SHRIMPS|Small shellfish|Little ones
+SILENCE|Quiet|Hush
+SIMILAR|Alike|Like
+SINCERE|Genuine|True
+SIXTEEN|Four squared|Sweet ___ (birthday)
+SKETCHY|Rough|Vague
+SLIPPER|House shoe|Soft shoe
+SNOWMAN|Winter figure|Frosty figure
+SOCIETY|Community|Club
+SOMEDAY|Eventually|In time
+SOMEONE|Somebody|Person
+SPARKLE|Glitter|Shine
+SPATULA|Kitchen tool|Turner
+SPECIAL|Unique|Particular
+SPINACH|Leafy green|Green often creamed
+SPONGES|Absorbers|Cakes
+STADIUM|Arena|Ground
+STAMINA|Endurance|Staying power
+STATION|Stop|Post
+STEWARD|Attendant|Manager
+STOMACH|Belly|Endure
+STORAGE|Keeping|Space
+STRANGE|Odd|Unusual
+STRETCH|Extend|Period
+STUDENT|Pupil|Learner
+SUBJECT|Topic|Theme
+SUCCESS|Triumph|Hit
+SUGGEST|Propose|Hint
+SUNBEAM|Ray|Beam
+SUNRISE|Dawn|Daybreak
+SUNSPOT|Solar blemish|Dark area
+SUPPORT|Back|Help
+SURFACE|Top|Exterior
+SWEATER|Jumper|Pullover
+TABLETS|Pills|Slabs
+TEACHER|Educator|Instructor
+TEXTILE|Fabric|Cloth
+THEATER|Playhouse|Stage
+THOUGHT|Idea|Considered
+THUNDER|Storm noise|Rumble
+TICKETS|Passes|Admits
+TOURIST|Traveler|Visitor
+TRACTOR|Farm vehicle|Puller
+TRAFFIC|Vehicles|Congestion
+TRAILER|Preview|Caravan
+TRAINER|Coach|Sneaker
+TRAVELS|Journeys|Moves
+TRIBUTE|Homage|Gift
+TRUMPET|Brass horn|Proclaim
+TUESDAY|Weekday|Day after Monday
+TUNNELS|Underpasses|Burrows
+TURKEYS|Birds|Flops
+UNIFORM|Same|Outfit
+UNKNOWN|Mysterious|Stranger
+UPRIGHT|Vertical|Honest
+UTENSIL|Tool|Implement
+VACANCY|Opening|Space
+VANILLA|Flavor|Plain
+VARIETY|Range|Show
+VEHICLE|Car|Means
+VENTURE|Undertaking|Dare
+VERSION|Edition|Account
+VILLAGE|Small town|Community
+VINTAGE|Classic|Year
+VIOLINS|String instruments|Fiddles
+VISITOR|Guest|Caller
+VOLCANO|Erupting mountain|Peak
+WARMEST|Hottest|Friendliest
+WEATHER|Climate|Withstand
+WEBSITE|Online page|Site
+WEDDING|Marriage|Union
+WEEKEND|Saturday and Sunday|Break
+WELCOME|Greet|Receive
+WESTERN|Cowboy movie|Occidental
+WHISPER|Murmur|Rumor
+WILDCAT|Untamed feline|Bobcat or lynx, broadly
+WINDOWS|Panes|Openings
+WINTERS|Cold seasons|Snowy times
+WITNESS|Observer|See
+WONDERS|Marvels|Ponders
+WRITING|Text|Authorship
