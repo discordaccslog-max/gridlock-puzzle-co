@@ -54,6 +54,57 @@
 
   function products() { return root.GRIDLOCK_PRODUCTS; }
 
+  /*
+   * Administrator keys (product code AD) open every book. Only SHA-256 hashes of these keys are
+   * stored here, so they cannot be worked out from this file. Create a new one with
+   * `node build/admin-key.js`; remove a hash from the list to revoke that key.
+   */
+  var ADMIN_CODE = 'AD';
+  var ADMIN_HASHES = ['264618500c6edef557caaee8b73bca31e0e47748cbea5d3d7501aefb32d4adfd'];
+
+  function sha256(ascii) {
+    var K = [], H = [], primes = [];
+    for (var n = 2; primes.length < 64; n++) {
+      var isPrime = true;
+      for (var j = 0; j < primes.length; j++) if (n % primes[j] === 0) { isPrime = false; break; }
+      if (isPrime) primes.push(n);
+    }
+    var frac = function (x) { return ((x - Math.floor(x)) * 4294967296) >>> 0; };
+    for (var p = 0; p < 64; p++) { K[p] = frac(Math.pow(primes[p], 1 / 3)); if (p < 8) H[p] = frac(Math.sqrt(primes[p])); }
+    var bytes = [];
+    for (var c = 0; c < ascii.length; c++) bytes.push(ascii.charCodeAt(c) & 0xff);
+    var bitLen = bytes.length * 8;
+    bytes.push(0x80);
+    while (bytes.length % 64 !== 56) bytes.push(0);
+    for (var s = 7; s >= 0; s--) bytes.push(s >= 4 ? 0 : (bitLen >>> (s * 8)) & 0xff);
+    var rotr = function (x, r) { return (x >>> r) | (x << (32 - r)); };
+    for (var off = 0; off < bytes.length; off += 64) {
+      var w = [];
+      for (var t = 0; t < 64; t++) {
+        if (t < 16) w[t] = (bytes[off + t * 4] << 24) | (bytes[off + t * 4 + 1] << 16) | (bytes[off + t * 4 + 2] << 8) | bytes[off + t * 4 + 3];
+        else {
+          var s0 = rotr(w[t - 15], 7) ^ rotr(w[t - 15], 18) ^ (w[t - 15] >>> 3);
+          var s1 = rotr(w[t - 2], 17) ^ rotr(w[t - 2], 19) ^ (w[t - 2] >>> 10);
+          w[t] = (w[t - 16] + s0 + w[t - 7] + s1) | 0;
+        }
+      }
+      var a = H[0], b = H[1], cc = H[2], d = H[3], e = H[4], f = H[5], g = H[6], h = H[7];
+      for (var r = 0; r < 64; r++) {
+        var t1 = (h + (rotr(e, 6) ^ rotr(e, 11) ^ rotr(e, 25)) + ((e & f) ^ (~e & g)) + K[r] + w[r]) | 0;
+        var t2 = ((rotr(a, 2) ^ rotr(a, 13) ^ rotr(a, 22)) + ((a & b) ^ (a & cc) ^ (b & cc))) | 0;
+        h = g; g = f; f = e; e = (d + t1) | 0; d = cc; cc = b; b = a; a = (t1 + t2) | 0;
+      }
+      H[0] = (H[0] + a) | 0; H[1] = (H[1] + b) | 0; H[2] = (H[2] + cc) | 0; H[3] = (H[3] + d) | 0;
+      H[4] = (H[4] + e) | 0; H[5] = (H[5] + f) | 0; H[6] = (H[6] + g) | 0; H[7] = (H[7] + h) | 0;
+    }
+    return H.map(function (x) { return ('00000000' + (x >>> 0).toString(16)).slice(-8); }).join('');
+  }
+
+  function adminProduct() {
+    return { id: 'admin', code: ADMIN_CODE, name: 'Administrator access (every book)', shortName: 'Administrator access', tier: 'admin',
+      books: products().books.map(function (b) { return b.id; }) };
+  }
+
   // Returns { ok, key, product } or { ok: false, message }.
   function parse(input) {
     var raw = String(input || '').toUpperCase().replace(/[\s‐-―-]+/g, '');
@@ -68,6 +119,11 @@
       return { ok: false, message: 'That key is ' + (raw.length < 2 + BODY + CHECK ? 'too short' : 'too long') + '. A key has 16 characters after GRID, for example GRID-DG-7KQ4M-X9D2P-H6TR.' };
     }
     var code = raw.slice(0, 2), body = raw.slice(2, 2 + BODY), check = raw.slice(2 + BODY);
+    if (code === ADMIN_CODE) {
+      var adminKey = format(code, body, check);
+      if (ADMIN_HASHES.indexOf(sha256(adminKey)) >= 0) return { ok: true, key: adminKey, product: adminProduct() };
+      return { ok: false, message: 'That key does not check out. Compare it with the key on your order confirmation page; one character may be off.' };
+    }
     var product = products().byCode(code);
     if (!product) return { ok: false, message: 'The product code “' + code + '” is not one of ours. It is the two characters right after GRID.' };
     if (checksum(code, body) !== check) return { ok: false, message: 'That key does not check out. Compare it with the key on your order confirmation page; one character may be off.' };

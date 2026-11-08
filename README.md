@@ -54,3 +54,10 @@ characters calculated from both, using an alphabet without 0, O, 1, I or L. The 
 creates a key in the browser; the unlock page validates it and stores it in the browser's
 localStorage. Everything runs client-side, so the site, its puzzle data and the key algorithm are
 all public; keys deter casual sharing rather than enforce it.
+
+## Administrator keys
+
+Run `node build/admin-key.js` to create a key that opens every book. The key is printed once and
+never saved; only its SHA-256 hash is added to `ADMIN_HASHES` in `src/js/license.js`, so it cannot be
+worked out from the public site. Rebuild and deploy afterwards. To revoke a key, delete its hash from
+that list and deploy again.
