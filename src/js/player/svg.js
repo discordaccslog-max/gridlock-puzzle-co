@@ -7,9 +7,9 @@
   function svg(w, h, body, label) {
     return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' + w + ' ' + h + '" role="img" aria-label="' + esc(label) + '">' + body + '</svg>';
   }
-  var SERIF = "font-family=\"'Instrument Serif',Georgia,serif\"";
-  var SANS = "font-family=\"'Instrument Sans',Arial,sans-serif\"";
-  var MONO = "font-family=\"'IBM Plex Mono',Consolas,monospace\"";
+  var SERIF = "font-family=\"'Hanken Grotesk',Arial,sans-serif\" font-weight=\"600\"";
+  var SANS = "font-family=\"'Hanken Grotesk',Arial,sans-serif\"";
+  var MONO = "font-family=\"'Hanken Grotesk',Arial,sans-serif\" font-weight=\"500\"";
 
   /* ---------- sudoku ---------- */
   function sudoku(p, opts) {
