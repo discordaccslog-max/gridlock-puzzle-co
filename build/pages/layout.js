@@ -4,7 +4,7 @@
 
 const SITE = {
   name: 'Gridlock Puzzle Co.',
-  url: 'https://discordaccslog-max.github.io/gridlock-puzzle-co/',
+  url: 'https://gridlock-puzzle-co.vercel.app/',
   updated: 'November 8, 2026',
   year: 2026,
 };

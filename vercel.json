@@ -1,0 +1,14 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": null,
+  "installCommand": "",
+  "buildCommand": "node build/site.js && node build/check-site.js",
+  "outputDirectory": "docs",
+  "trailingSlash": true,
+  "headers": [
+    {
+      "source": "/thank-you/(.*)",
+      "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }]
+    }
+  ]
+}

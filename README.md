@@ -1,7 +1,15 @@
 # Gridlock Puzzle Co.
 
 Storefront, puzzle generator and in-browser puzzle player for Gridlock Puzzle Co. The finished
-static site lives in `docs/` and is published with GitHub Pages.
+static site lives in `docs/`.
+
+## Hosting
+
+The site is hosted on Vercel at https://gridlock-puzzle-co.vercel.app (project `gridlock-puzzle-co`).
+`vercel.json` serves `docs/`, rebuilds it from source with `node build/site.js` on every deploy, and
+adds trailing slashes so relative links resolve. Deploy with `vercel deploy --prod` from this folder.
+Canonical URLs, Open Graph tags and `sitemap.xml` use the Vercel address (`SITE.url` in
+`build/pages/layout.js`). The same `docs/` folder is also published by GitHub Pages.
 
 ## Layout
 
