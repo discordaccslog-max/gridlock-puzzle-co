@@ -33,7 +33,7 @@ function buyBox(p, dark) {
   return `<aside class="buy-box" aria-label="Price and purchase">
 <p class="label">${p.tier === 'expert' ? 'Expert Edition' : 'Core Books'}</p>
 <p class="price"><span data-price="${p.id}">$${p.price}</span><small>USD</small></p>
-<div class="buy-area" data-buy="${p.id}"></div>
+<div class="buy-area" data-buy="${p.id}" data-root="../../"></div>
 <p class="terms">Instant access with a license key · <a href="../../refunds/">14-day refund policy</a> · Applicable taxes are shown at checkout.</p>
 </aside>`;
 }

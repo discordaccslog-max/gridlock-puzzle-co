@@ -16,7 +16,7 @@ let problems = 0;
 function walk(dir, out = []) {
   for (const f of fs.readdirSync(dir)) {
     const p = path.join(dir, f);
-    if (fs.statSync(p).isDirectory()) { if (f !== 'node_modules' && f !== '.git') walk(p, out); }
+    if (fs.statSync(p).isDirectory()) { if (f !== 'node_modules' && f !== '.git' && f !== 'fulfillment-kit' && f !== '.vercel') walk(p, out); }
     else out.push(p);
   }
   return out;

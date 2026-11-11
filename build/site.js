@@ -209,7 +209,7 @@ function homeBody() {
     : `<a class="etile" href="products/${p.id}/"><span class="stamp">Expert Edition</span><div class="art">${eart[p.id]}</div><h3>${esc(p.name)}</h3><p class="sub">${esub[p.id]}</p>
 <div class="meta"><span class="price" data-price="${p.id}">$${p.price}</span><span class="count">${productCount(p.id)} puzzles</span></div></a>`;
 
-  const faqItems = info.FAQ('').filter((_, i) => [0, 3, 5, 7].includes(i));
+  const faqItems = info.FAQ('').filter((_, i) => [0, 1, 4, 6, 8].includes(i));
   return `<section class="hero">
   <div class="wrap hero-inner">
     <div>
@@ -273,26 +273,41 @@ function homeBody() {
 function thankYouBody(p) {
   const bookList = p.books.map(id => `<li>${esc(products.book(id).title)}</li>`).join('');
   return `<div class="wrap section" data-thank-you="${p.id}">
-  <span class="kicker">Order confirmed</span>
-  <h1>Thank you.</h1>
-  <p class="lede">Your license key for <strong>${esc(p.name)}</strong> is ready.</p>
+  <span class="kicker">Order confirmation</span>
+  <h1>Order complete. Your puzzles are delivered.</h1>
+  <p class="lede">Thank you for your purchase. <strong>${esc(p.name)}</strong> is delivered as the license key on this page, ready to use right now. Nothing is shipped.</p>
+  <dl class="order-details" aria-label="Order details">
+    <div><dt>Product</dt><dd>${esc(p.name)}</dd></div>
+    <div><dt>Date and time</dt><dd data-order-time></dd></div>
+    <div data-order-ref-row hidden><dt>Order reference</dt><dd data-order-ref></dd></div>
+    <div><dt>Delivery</dt><dd>Digital: license key shown below</dd></div>
+  </dl>
   <div class="keybox">
     <p class="label">Your license key</p>
     <div class="flapboard" aria-hidden="true"></div>
     <p class="key-plain" data-key-plain></p>
     <p class="sr-only" aria-live="polite" data-key-live></p>
-    <div class="btn-row">
+    <div class="btn-row thank-actions">
       <button type="button" class="btn" data-copy disabled>Copy key</button>
-      <button type="button" class="btn ghost" data-save disabled>Save as a text file</button>
+      <button type="button" class="btn ghost" data-save disabled>Save confirmation</button>
+      <button type="button" class="btn ghost" data-print>Print</button>
       <a class="btn red" data-open href="../../unlock/" aria-disabled="true">Open my puzzles</a>
     </div>
-    <p class="muted" data-copied aria-live="polite"></p>
-    <div class="save-note"><strong>Save your key now.</strong> Copy it into a password manager or a note, or save the text file. You will need it to open your puzzles on another device, or on this one after clearing your browser data.</div>
+    <p class="muted thank-actions" data-copied aria-live="polite"></p>
+    <div class="save-note"><strong>Save your key now.</strong> Copy it into a password manager or a note, or use <strong>Save confirmation</strong> to download this confirmation as a PDF. You will need the key to open your puzzles on another device, or on this one after clearing your browser data.</div>
   </div>
   <section class="section tight">
+    <h2>How to open your puzzles</h2>
+    <ol class="delivery-steps">
+      <li>Select <strong>Open my puzzles</strong>, or go to the <a href="../../unlock/">Unlock page</a> and enter the key above.</li>
+      <li>Your ${p.books.length > 1 ? 'books appear' : 'book appears'} on your <a href="../../library/">library shelf</a> straight away.</li>
+      <li>Open a book and play in your browser. Any puzzle can also be printed.</li>
+      <li>To play on another computer, tablet or phone, enter the same key on that device.</li>
+    </ol>
     <h2>This key opens</h2>
     <ul class="thank-books">${bookList}</ul>
-    <p>Enter the key on the <a href="../../unlock/">Unlock page</a> on each device you want to use. If you ever lose it, <a href="../../contact/">contact us through the Contact page</a> with your order number for a replacement.</p>
+    <p>If you ever lose your key, <a href="../../contact/">contact us through the Contact page</a> with your order number for a replacement.</p>
+    <p class="muted">Your purchase is covered by our <a href="../../terms/">Terms of Service</a>, <a href="../../refunds/">Refund Policy</a> and <a href="../../delivery/">Delivery Policy</a>.</p>
   </section>
   <noscript><p class="note">This page needs JavaScript turned on to create your key. Please turn it on and reload the page.</p></noscript>
 </div>`;

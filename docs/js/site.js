@@ -63,16 +63,45 @@
       var p = catalog.byId(el.getAttribute('data-price'));
       if (p) el.textContent = catalog.formatPrice(p);
     });
+    // The buy button and the terms checkbox appear together, and only once a checkout link is set.
+    // The button stays disabled until the buyer agrees to the Terms of Service and Refund Policy.
     document.querySelectorAll('[data-buy]').forEach(function (el) {
       var p = catalog.byId(el.getAttribute('data-buy'));
       el.textContent = '';
       if (!p || !p.checkoutUrl) return;
-      var a = document.createElement('a');
-      a.className = 'btn red';
-      a.href = p.checkoutUrl;
-      a.rel = 'noopener';
-      a.textContent = 'Buy now · ' + catalog.formatPrice(p);
-      el.appendChild(a);
+      var r = el.getAttribute('data-root') || '';
+      var id = 'agree-' + p.id;
+      var waiting = 'Tick the box to agree to the Terms of Service and Refund Policy. The buy button turns on once you do.';
+      var ready = 'Thank you. You can continue to checkout.';
+      el.innerHTML =
+        '<div class="agree"><input type="checkbox" id="' + id + '" aria-describedby="' + id + '-hint">' +
+        '<label for="' + id + '">I agree to the <a href="' + r + 'terms/">Terms of Service</a> and <a href="' + r + 'refunds/">Refund Policy</a></label></div>' +
+        '<a class="btn red buy-link" role="link" aria-disabled="true" aria-describedby="' + id + '-hint" rel="noopener"></a>' +
+        '<p class="agree-hint" id="' + id + '-hint" aria-live="polite"></p>';
+      var box = el.querySelector('input');
+      var link = el.querySelector('.buy-link');
+      var hint = el.querySelector('.agree-hint');
+      link.textContent = 'Buy now · ' + catalog.formatPrice(p);
+      function sync() {
+        if (box.checked) {
+          link.href = p.checkoutUrl;
+          link.removeAttribute('aria-disabled');
+          hint.textContent = ready;
+          hint.classList.remove('nudge');
+        } else {
+          link.removeAttribute('href');
+          link.setAttribute('aria-disabled', 'true');
+          hint.textContent = waiting;
+        }
+      }
+      box.addEventListener('change', sync);
+      link.addEventListener('click', function (e) {
+        if (box.checked) return;
+        e.preventDefault();
+        hint.classList.remove('nudge'); void hint.offsetWidth; hint.classList.add('nudge');
+        box.focus();
+      });
+      sync();
     });
   }
 
