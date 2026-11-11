@@ -118,7 +118,7 @@
       { t: 'Date and time: ' + when },
     ];
     if (orderRef) lines.push({ t: 'Order reference: ' + orderRef });
-    lines.push({ t: 'Delivery: digital, license key shown on the order confirmation page' });
+    lines.push({ t: 'Delivery: digital, license key shown on the order confirmation page', gap: 10 });
     lines.push({ t: 'License key: ' + key, size: 13, bold: true, gap: 14 });
     lines.push({ t: 'This key opens: ' + books.join(', '), gap: 14 });
     lines.push({ t: 'How to open your puzzles', bold: true, size: 12 });

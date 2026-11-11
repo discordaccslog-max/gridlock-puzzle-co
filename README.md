@@ -32,14 +32,20 @@ npm run generate   # regenerate puzzle data (node build/generate.js --only=ciphe
 npm run verify     # re-check every puzzle
 npm run build      # rebuild docs/ and check it
 npm run serve      # preview at http://localhost:8080/gridlock-puzzle-co/
+npm run key -- daily-grid   # issue a license key, for example a replacement for a lost one
+npm run kit        # build the fulfillment evidence kit (see below)
 ```
 
 ## Connecting payments
 
 Open `src/js/products.js` and paste each product's payment link into its `checkoutUrl`. The buy
-button appears on that product page only when `checkoutUrl` is set. Set your payment provider to
+button appears on that product page only when `checkoutUrl` is set, together with an "I agree to the
+Terms of Service and Refund Policy" checkbox; the button stays disabled until the box is ticked. Set
+your payment provider to
 redirect buyers to the product's thank-you page after payment; each product's path is in
-`thankYouPath`, for example `thank-you/daily-grid/`. Then run `npm run build` (or edit
+`thankYouPath`, for example `thank-you/daily-grid/`. If the provider can add its order or session
+reference to that address (`session_id`, `order_id`, `order`, `transaction_id`, `txn_id` or `token`),
+the order confirmation page shows it. Then run `npm run build` (or edit
 `docs/js/products.js` directly) and push.
 
 ## Support email
@@ -61,3 +67,24 @@ Run `node build/admin-key.js` to create a key that opens every book. The key is 
 never saved; only its SHA-256 hash is added to `ADMIN_HASHES` in `src/js/license.js`, so it cannot be
 worked out from the public site. Rebuild and deploy afterwards. To revoke a key, delete its hash from
 that list and deploy again.
+
+## Replacement keys
+
+`node build/issue-key.js <product-id>` (or `npm run key -- <product-id>`) prints a new license key
+for that product, made by the same code as the order confirmation page. Run it without arguments to
+list the product ids.
+
+## Fulfillment evidence kit
+
+`npm run kit` walks the purchase-to-delivery flow for every product on the live site in Microsoft
+Edge and writes `fulfillment-kit/`: screenshots of every step, a screen recording, the saved
+confirmation PDFs, one verified reviewer key per product, a pasteable business and fulfillment
+summary, and `Fulfillment-Overview.pdf` for payment processor reviews. Start with
+`fulfillment-kit/READ-ME-FIRST.txt`. The folder is in `.gitignore` and `.vercelignore`, so it is
+never committed or published.
+
+One-time setup: `npm install`, then `npx playwright-core install ffmpeg` (the video encoder). Set
+`KIT_CHANNEL=chrome` to use Chrome instead of Edge, or pass another site address as an argument.
+The payment step happens on the payment provider's site and is described in writing, not captured.
+While a product has no checkout link, the capture adds a test link inside its own browser only, so
+the checkbox and buy button can be shown; every caption says so.
