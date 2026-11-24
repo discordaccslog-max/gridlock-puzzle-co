@@ -273,13 +273,25 @@ function homeBody() {
 function thankYouBody(p) {
   const bookList = p.books.map(id => `<li>${esc(products.book(id).title)}</li>`).join('');
   return `<div class="wrap section" data-thank-you="${p.id}">
+  <div data-state="loading" role="status">
+    <span class="kicker">Order confirmation</span>
+    <h1>Checking your payment</h1>
+    <p class="lede">We are confirming your order with our payment provider. Your license key appears here in a moment.</p>
+  </div>
+  <div data-state="failed" hidden>
+    <span class="kicker">Order confirmation</span>
+    <h1>We could not confirm this order</h1>
+    <p class="lede" data-fail-message role="alert"></p>
+    <p class="btn-row"><button type="button" class="btn red" data-retry hidden>Try again</button><a class="btn ghost" href="../../contact/">Contact us</a></p>
+  </div>
+  <div data-state="ready" hidden>
   <span class="kicker">Order confirmation</span>
   <h1>Order complete. Your puzzles are delivered.</h1>
-  <p class="lede">Thank you for your purchase. <strong>${esc(p.name)}</strong> is delivered as the license key on this page, ready to use right now. Nothing is shipped.</p>
+  <p class="lede">Thank you for your purchase. Your payment is confirmed, and <strong>${esc(p.name)}</strong> is delivered as the license key on this page, ready to use right now. Nothing is shipped.</p>
   <dl class="order-details" aria-label="Order details">
     <div><dt>Product</dt><dd>${esc(p.name)}</dd></div>
     <div><dt>Date and time</dt><dd data-order-time></dd></div>
-    <div data-order-ref-row hidden><dt>Order reference</dt><dd data-order-ref></dd></div>
+    <div><dt>Order reference</dt><dd data-order-ref></dd></div>
     <div><dt>Delivery</dt><dd>Digital: license key shown below</dd></div>
   </dl>
   <div class="keybox">
@@ -306,10 +318,11 @@ function thankYouBody(p) {
     </ol>
     <h2>This key opens</h2>
     <ul class="thank-books">${bookList}</ul>
-    <p>If you ever lose your key, <a href="../../contact/">contact us through the Contact page</a> with your order number for a replacement.</p>
-    <p class="muted">Your purchase is covered by our <a href="../../terms/">Terms of Service</a>, <a href="../../refunds/">Refund Policy</a> and <a href="../../delivery/">Delivery Policy</a>.</p>
+    <p>If you ever lose your key, <a href="../../contact/">contact us through the Contact page</a> with your order number and we will send it to you again.</p>
   </section>
-  <noscript><p class="note">This page needs JavaScript turned on to create your key. Please turn it on and reload the page.</p></noscript>
+  </div>
+  <p class="muted">Your purchase is covered by our <a href="../../terms/">Terms of Service</a>, <a href="../../refunds/">Refund Policy</a> and <a href="../../delivery/">Delivery Policy</a>.</p>
+  <noscript><p class="note">This page needs JavaScript turned on to confirm your payment and show your key. Please turn it on and reload the page.</p></noscript>
 </div>`;
 }
 
@@ -351,8 +364,8 @@ function unlockBody() {
     <div class="columns">
       <h2>Good to know</h2>
       <p>Your key is on the order confirmation page you saw after paying. Keys never contain 0, O, 1, I or L, so there are no look-alike characters.</p>
-      <p>One key works on any number of your own devices; just enter it again on each one. Unlocked books stay open on this device until you sign out from your library.</p>
-      <p>Lost your key? <a href="../contact/">Contact us through the Contact page</a> with your order number and we will send a replacement.</p>
+      <p>One key works on any number of your own devices; just enter it again on each one. We check each key when you unlock it, so you need an internet connection. Unlocked books stay open on this device until you sign out from your library.</p>
+      <p>Lost your key? <a href="../contact/">Contact us through the Contact page</a> with your order number and we will send your key to you again.</p>
     </div>
   </section>
 </div>`;

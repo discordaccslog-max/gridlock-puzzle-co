@@ -1,3 +1,5 @@
 fulfillment-kit
 node_modules
 generated/gen-log.txt
+.env.local
+.env*.local

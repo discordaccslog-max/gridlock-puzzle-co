@@ -1,14 +1,21 @@
 /*
- * Thank-you page: the order confirmation. Issues a license key in the browser, reveals it like a
- * split-flap board, and shows the order details: product, date and time, and the order reference
- * if the payment provider added one to the URL. "Save confirmation" downloads a PDF made in the
- * browser; nothing is sent anywhere.
+ * Thank-you page: the order confirmation. Asks the server (api/order) to confirm the payment with
+ * Stripe and to issue the license key for this order; the server also records the delivery on the
+ * Stripe payment. Then reveals the key like a split-flap board and shows the order details.
+ * "Save confirmation" downloads a PDF made in the browser.
  */
 (function () {
   var root = document.querySelector('[data-thank-you]');
   if (!root) return;
   var catalog = window.GRIDLOCK_PRODUCTS, license = window.GRIDLOCK_LICENSE;
   var product = catalog.byId(root.getAttribute('data-thank-you'));
+  var states = {
+    loading: root.querySelector('[data-state="loading"]'),
+    failed: root.querySelector('[data-state="failed"]'),
+    ready: root.querySelector('[data-state="ready"]'),
+  };
+  var failMessage = root.querySelector('[data-fail-message]');
+  var retryBtn = root.querySelector('[data-retry]');
   var board = root.querySelector('.flapboard');
   var plain = root.querySelector('[data-key-plain]');
   var live = root.querySelector('[data-key-live]');
@@ -18,79 +25,96 @@
   var openBtn = root.querySelector('[data-open]');
   var copied = root.querySelector('[data-copied]');
 
-  // Keep the same key and time if this tab is refreshed; a new visit issues a new key.
-  var storeKey = 'gridlock.issued.' + product.id;
-  var timeKey = 'gridlock.issued-at.' + product.id;
-  var key = null, issuedAt = null;
-  try { key = sessionStorage.getItem(storeKey); issuedAt = Number(sessionStorage.getItem(timeKey)) || null; } catch (e) { key = null; }
-  if (!key || !license.parse(key).ok) {
-    key = license.generate(product.code);
-    issuedAt = Date.now();
-    try { sessionStorage.setItem(storeKey, key); sessionStorage.setItem(timeKey, String(issuedAt)); } catch (e) { /* not kept across refresh */ }
-  }
-  if (!issuedAt) issuedAt = Date.now();
+  var sessionId = (new URLSearchParams(location.search).get('session_id') || '').trim();
+  var key = '', when = '', orderRef = '';
+  var CONTACT = ' If you have paid, contact us through the Contact page with the email address you used at checkout and we will send your key.';
 
-  /* ---------- order details ---------- */
-  var when = new Date(issuedAt).toLocaleString(undefined, {
-    year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: '2-digit', timeZoneName: 'short',
-  });
-  root.querySelector('[data-order-time]').textContent = when;
-
-  // Payment providers add their own reference to the return URL under different names.
-  var REF_PARAMS = ['session_id', 'order_id', 'order', 'transaction_id', 'txn_id', 'token'];
-  var params = new URLSearchParams(location.search);
-  var orderRef = '';
-  for (var i = 0; i < REF_PARAMS.length && !orderRef; i++) {
-    var v = params.get(REF_PARAMS[i]);
-    if (v) orderRef = v.replace(/[^A-Za-z0-9_.:\-]/g, '').slice(0, 120);
+  function show(name) {
+    Object.keys(states).forEach(function (k) { states[k].hidden = k !== name; });
+    var h = states[name].querySelector('h1');
+    if (name !== 'loading' && h) { h.setAttribute('tabindex', '-1'); h.focus({ preventScroll: true }); }
   }
-  if (orderRef) {
+
+  function fail(message, canRetry) {
+    failMessage.textContent = message + (canRetry ? '' : CONTACT);
+    retryBtn.hidden = !canRetry;
+    show('failed');
+  }
+
+  function load() {
+    show('loading');
+    if (!sessionId) return fail('This page shows your license key after you pay, but this address has no order reference.', false);
+    fetch('../../api/order/?session_id=' + encodeURIComponent(sessionId), { cache: 'no-store' })
+      .then(function (r) { return r.json().catch(function () { return { ok: false, code: 'bad-response' }; }); })
+      .then(function (d) {
+        if (!d.ok) {
+          var retry = ['unpaid', 'lookup-failed', 'not-configured', 'bad-response'].indexOf(d.code) >= 0;
+          return fail(d.message || 'We could not confirm this order right now. Please try again in a moment.', retry);
+        }
+        // the order is for another product: show that product's confirmation page instead
+        if (d.product !== product.id) { location.replace('../../thank-you/' + d.product + '/' + location.search); return; }
+        deliver(d);
+      })
+      .catch(function () { fail('We could not reach our server to confirm your order. Check your connection and try again.', true); });
+  }
+  retryBtn.addEventListener('click', load);
+
+  function deliver(d) {
+    key = d.key;
+    orderRef = d.order;
+    when = new Date(d.purchasedAt).toLocaleString(undefined, {
+      year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: '2-digit', timeZoneName: 'short',
+    });
+    root.querySelector('[data-order-time]').textContent = when;
     root.querySelector('[data-order-ref]').textContent = orderRef;
-    root.querySelector('[data-order-ref-row]').hidden = false;
+    show('ready');
+    reveal();
   }
 
   /* ---------- key reveal ---------- */
-  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  board.innerHTML = '';
-  var tiles = [];
-  var seg = null;
-  key.split('').forEach(function (ch) {
-    if (ch === '-') { board.appendChild(Object.assign(document.createElement('span'), { className: 'dash', textContent: '-' })); seg = null; return; }
-    if (!seg) { seg = document.createElement('span'); seg.className = 'seg'; board.appendChild(seg); }
-    var tile = document.createElement('span');
-    tile.className = 'ch';
-    tile.setAttribute('aria-hidden', 'true');
-    tile.style.setProperty('--i', String(tiles.length));
-    var inner = document.createElement('span');
-    inner.textContent = reduce ? ch : '';
-    tile.appendChild(inner);
-    seg.appendChild(tile);
-    tiles.push({ el: tile, inner: inner, ch: ch });
-  });
-
-  function done() {
-    plain.textContent = key;
-    live.textContent = 'Your license key is ' + key.split('').join(' ') + '.';
-    copyBtn.disabled = false; saveBtn.disabled = false; openBtn.removeAttribute('aria-disabled');
-    root.setAttribute('data-key-ready', 'true');
-  }
-  if (reduce) done();
-  else {
-    var A = license.ALPHABET;
-    tiles.forEach(function (t, idx) {
-      var flips = 0;
-      setTimeout(function spin() {
-        if (flips < 5) {
-          t.inner.textContent = A[Math.floor(Math.random() * A.length)];
-          flips++;
-          setTimeout(spin, 45);
-        } else {
-          t.inner.textContent = t.ch;
-          t.el.classList.add('flip');
-          if (idx === tiles.length - 1) setTimeout(done, 450);
-        }
-      }, idx * 70);
+  function reveal() {
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    board.innerHTML = '';
+    var tiles = [];
+    var seg = null;
+    key.split('').forEach(function (ch) {
+      if (ch === '-') { board.appendChild(Object.assign(document.createElement('span'), { className: 'dash', textContent: '-' })); seg = null; return; }
+      if (!seg) { seg = document.createElement('span'); seg.className = 'seg'; board.appendChild(seg); }
+      var tile = document.createElement('span');
+      tile.className = 'ch';
+      tile.setAttribute('aria-hidden', 'true');
+      tile.style.setProperty('--i', String(tiles.length));
+      var inner = document.createElement('span');
+      inner.textContent = reduce ? ch : '';
+      tile.appendChild(inner);
+      seg.appendChild(tile);
+      tiles.push({ el: tile, inner: inner, ch: ch });
     });
+
+    function done() {
+      plain.textContent = key;
+      live.textContent = 'Your license key is ' + key.split('').join(' ') + '.';
+      copyBtn.disabled = false; saveBtn.disabled = false; openBtn.removeAttribute('aria-disabled');
+      root.setAttribute('data-key-ready', 'true');
+    }
+    if (reduce) done();
+    else {
+      var A = license.ALPHABET;
+      tiles.forEach(function (t, idx) {
+        var flips = 0;
+        setTimeout(function spin() {
+          if (flips < 5) {
+            t.inner.textContent = A[Math.floor(Math.random() * A.length)];
+            flips++;
+            setTimeout(spin, 45);
+          } else {
+            t.inner.textContent = t.ch;
+            t.el.classList.add('flip');
+            if (idx === tiles.length - 1) setTimeout(done, 450);
+          }
+        }, idx * 70);
+      });
+    }
   }
 
   /* ---------- actions ---------- */
@@ -118,7 +142,7 @@
       { t: 'Date and time: ' + when },
     ];
     if (orderRef) lines.push({ t: 'Order reference: ' + orderRef });
-    lines.push({ t: 'Delivery: digital, license key shown on the order confirmation page', gap: 10 });
+    lines.push({ t: 'Delivery: digital, license key shown on the order confirmation page after payment was confirmed', gap: 10 });
     lines.push({ t: 'License key: ' + key, size: 13, bold: true, gap: 14 });
     lines.push({ t: 'This key opens: ' + books.join(', '), gap: 14 });
     lines.push({ t: 'How to open your puzzles', bold: true, size: 12 });
@@ -148,8 +172,13 @@
   printBtn.addEventListener('click', function () { window.print(); });
 
   openBtn.addEventListener('click', function () {
-    try { sessionStorage.setItem('gridlock.pendingKey', key); } catch (e) { /* the unlock page will ask for it */ }
+    try {
+      sessionStorage.setItem('gridlock.pendingKey', key);
+      sessionStorage.setItem('gridlock.pendingOrder', orderRef);
+    } catch (e) { /* the unlock page will ask for the key */ }
   });
+
+  load();
 
   /* ---------- a small text-only PDF, written by hand ---------- */
   function ascii(s) {

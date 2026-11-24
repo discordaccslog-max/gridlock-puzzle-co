@@ -1,20 +1,24 @@
 'use strict';
 /*
  * Builds the fulfillment evidence kit for payment processor reviews.
- *   npm install                      (once: installs playwright-core)
+ *   npm install                          (once: installs playwright-core)
  *   npx playwright-core install ffmpeg   (once: the video encoder Playwright uses)
- *   npm run kit                      (or: node build/fulfillment-kit.js [site-url])
+ *   npm run kit                          (or: node build/fulfillment-kit.js [site-url])
  *
- * Walks the purchase-to-delivery flow for every product on the live site in Microsoft Edge
- * (set KIT_CHANNEL=chrome to use Chrome), and writes everything to fulfillment-kit/:
- * screenshots of each step, one screen recording, the saved confirmation PDFs, verified
- * reviewer keys, a pasteable business and fulfillment summary, and Fulfillment-Overview.pdf.
- * fulfillment-kit/ is in .gitignore and .vercelignore: it is never committed or published.
+ * Needs STRIPE_SECRET_KEY and LICENSE_SECRET with the same values as the live site (from the
+ * environment or .env.local), and a completed order for each product to show, placed through
+ * the live site's payment links. Stripe test mode works while the live site uses test links.
  *
- * The payment step happens on the payment provider's site and is described in writing only.
- * While a product has no checkout link yet, the product page shows no buy button, so the
- * capture adds a test link in the browser only (the live site is not changed) and every
- * caption says so.
+ * For each product with an order, walks the purchase-to-delivery flow on the live site in
+ * Microsoft Edge (set KIT_CHANNEL=chrome to use Chrome), using that real order for the
+ * confirmation step, then reads the delivery records back from the Stripe payment. Writes
+ * everything to fulfillment-kit/ (or KIT_OUT): screenshots of each step, one screen recording,
+ * the saved confirmation PDFs, verified reviewer keys, a pasteable business and fulfillment
+ * summary, and Fulfillment-Overview.pdf. fulfillment-kit/ is in .gitignore and .vercelignore,
+ * so it is never committed or published.
+ *
+ * The payment step happens on Stripe's site and is described in writing only. The kit's own
+ * visits to the confirmation pages and its unlocks are recorded on the orders it uses.
  */
 const fs = require('fs');
 const path = require('path');
@@ -25,32 +29,39 @@ try { ({ chromium } = require('playwright-core')); } catch (e) {
   console.error('playwright-core is not installed. Run: npm install');
   process.exit(1);
 }
+require('./env');
 const { SITE } = require('./pages/layout.js');
-const { loadLicense, issue } = require('./issue-key.js');
+const L = require('../api/_license');
+const S = require('../api/_stripe');
+const { issue, catalog } = require('./issue-key.js');
 const config = require('../src/js/site-config.js');
 
 const BASE = (process.argv[2] || process.env.KIT_BASE || SITE.url).replace(/\/?$/, '/');
 const CHANNEL = process.env.KIT_CHANNEL || 'msedge';
 const ROOT = path.join(__dirname, '..');
-const OUT = path.join(ROOT, 'fulfillment-kit');
+const OUT = process.env.KIT_OUT ? path.resolve(process.env.KIT_OUT) : path.join(ROOT, 'fulfillment-kit');
 const SHOTS = path.join(OUT, 'screenshots');
 const PDFIMG = path.join(OUT, '.pdf-images');
 const VIEW = { width: 1280, height: 800 };
-const TEST_CHECKOUT = 'https://checkout.invalid/test-link-for-capture';
 const VIDEO_PRODUCT = 'core-collection';
 const PDFJS = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/';
 
-const { catalog, license } = loadLicense();
 const products = catalog.products;
 const bookTitle = id => catalog.book(id).title;
 const rel = f => path.relative(OUT, f).split(path.sep).join('/');
-const sleep = ms => new Promise(r => setTimeout(r, ms));
 const today = new Date();
 const dateLong = today.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
 const supportEmail = (config.supportEmail || '').trim();
 const priceRange = '$' + Math.min(...products.map(p => p.price)) + ' to $' + Math.max(...products.map(p => p.price));
 const url = p => BASE + p;
-const log = [];
+const plainName = p => p.name.replace(/’/g, "'");
+const RECORD_FIELDS = [
+  ['gridlock_key', 'License key'], ['gridlock_product', 'Product'],
+  ['gridlock_delivered_at', 'Key first shown'], ['gridlock_delivered_ip', 'Shown to IP address'], ['gridlock_delivered_agent', 'Browser'],
+  ['gridlock_views', 'Times shown'], ['gridlock_last_view_at', 'Last shown'],
+  ['gridlock_unlocked_at', 'First unlocked'], ['gridlock_unlocked_ip', 'Unlocked from IP address'], ['gridlock_unlocked_agent', 'Browser'],
+  ['gridlock_unlocks', 'Times unlocked'], ['gridlock_last_unlock_at', 'Last unlocked'],
+];
 
 /* ------------------------------------------------------------------ helpers */
 
@@ -62,13 +73,41 @@ async function liveCatalog() {
   return ctx.GRIDLOCK_PRODUCTS;
 }
 
-// Adds a test checkout link in this browser context only, for products that have none yet.
-async function routeTestCheckout(context) {
-  await context.route(/\/js\/products\.js(\?.*)?$/, async route => {
-    const res = await route.fetch();
-    const body = (await res.text()).replace(/checkoutUrl: ''/g, "checkoutUrl: '" + TEST_CHECKOUT + "'");
-    await route.fulfill({ response: res, body });
-  });
+// The newest paid order for each product, found through the live site's payment links.
+async function findOrders(liveCat) {
+  const links = [];
+  for (let after; ;) {
+    const page = await S.stripe('GET', 'payment_links', { limit: 100, starting_after: after });
+    links.push(...page.data);
+    if (!page.has_more || !page.data.length) break;
+    after = page.data[page.data.length - 1].id;
+  }
+  const normal = u => { try { const x = new URL(u); return (x.origin + x.pathname).replace(/\/$/, ''); } catch (e) { return ''; } };
+  const orders = {};
+  for (const p of products) {
+    const live = (liveCat.byId(p.id) || {}).checkoutUrl;
+    const link = live && links.find(l => normal(l.url) === normal(live));
+    if (!link) continue;
+    const list = await S.stripe('GET', 'checkout/sessions', { payment_link: link.id, status: 'complete', limit: 20 });
+    const s = list.data.find(x => x.payment_status === 'paid' && x.payment_intent);
+    if (s) orders[p.id] = { id: s.id, paymentIntent: typeof s.payment_intent === 'object' ? s.payment_intent.id : s.payment_intent, test: s.id.startsWith('cs_test_') };
+  }
+  return orders;
+}
+
+async function readRecords(order) {
+  const pi = await S.stripe('GET', 'payment_intents/' + encodeURIComponent(order.paymentIntent));
+  const m = pi.metadata || {};
+  const out = {};
+  for (const [k] of RECORD_FIELDS) if (m[k]) out[k] = m[k];
+  return out;
+}
+
+// Hides the last part of an IP address in documents meant for other people.
+function maskIp(ip) {
+  if (!ip) return '';
+  if (/^\d+\.\d+\.\d+\.\d+$/.test(ip)) return ip.replace(/\.\d+$/, '.x');
+  return ip.split(':').slice(0, 3).join(':') + ':…';
 }
 
 // Renders saved confirmation PDFs with pdf.js on a local-only origin, so they can be screenshotted.
@@ -258,11 +297,10 @@ async function showPuzzle(page) {
 
 /* ------------------------------------------------- one product, start to finish */
 
-async function captureProduct(browser, p, idx, injected) {
+async function captureProduct(browser, p, idx, order, liveUrl) {
   const dir = path.join(SHOTS, String(idx + 1).padStart(2, '0') + '-' + p.id);
   fs.mkdirSync(dir, { recursive: true });
   const context = await browser.newContext({ viewport: VIEW, colorScheme: 'light', locale: 'en-US', reducedMotion: 'reduce', acceptDownloads: true });
-  if (injected) await routeTestCheckout(context);
   await routeRenderer(context);
   const page = await context.newPage();
   const shots = {};
@@ -311,8 +349,7 @@ async function captureProduct(browser, p, idx, injected) {
   await page.focus('.buy-area .agree input');
   await page.keyboard.press('Space');
   const s1 = await buyState();
-  const expectHref = injected ? TEST_CHECKOUT : p.checkoutUrl;
-  check('Ticking the box (keyboard) enables the buy button', s1 && s1.checked && !s1.disabled && s1.href === expectHref, s1 && s1.hint);
+  check('Ticking the box (keyboard) enables the buy button and links it to Stripe checkout', s1 && s1.checked && !s1.disabled && s1.href === liveUrl, s1 && s1.href);
   await page.keyboard.press('Space');
   const s2 = await buyState();
   check('Unticking the box disables the buy button again', s2 && !s2.checked && s2.disabled && !s2.href);
@@ -320,25 +357,27 @@ async function captureProduct(browser, p, idx, injected) {
   await page.waitForTimeout(250);
   await shot('04-buy-box-after-agreeing', {}, page.locator('.buy-box'));
 
-  // Step 2 (payment on the provider's checkout) is not captured.
-  // Step 3: order confirmation, as the provider's redirect would open it
-  const ref = 'SAMPLE-ORDER-' + p.code;
+  // Step 2 (payment on Stripe's checkout) is not captured.
+  // Step 3: order confirmation for a real order, as Stripe's redirect opens it
+  const ref = order.id;
   await page.goto(url(p.thankYouPath) + '?session_id=' + ref, { waitUntil: 'networkidle' });
-  await page.waitForSelector('[data-key-ready="true"]', { timeout: 20000 });
+  await page.waitForSelector('[data-key-ready="true"], [data-state="failed"]:not([hidden])', { timeout: 20000 });
   await settle(page);
   const conf = await page.evaluate(() => {
     const dd = label => { const dt = Array.from(document.querySelectorAll('.order-details dt')).find(d => d.textContent.trim() === label); return dt ? dt.nextElementSibling.textContent.trim() : ''; };
-    return { h1: document.querySelector('h1').textContent.trim(), key: document.querySelector('[data-key-plain]').textContent.trim(),
-      product: dd('Product'), time: dd('Date and time'), ref: document.querySelector('[data-order-ref-row]').hidden ? '' : dd('Order reference'),
+    return { h1: document.querySelector('[data-state="ready"] h1').textContent.trim(), ready: !document.querySelector('[data-state="ready"]').hidden,
+      failure: document.querySelector('[data-fail-message]').textContent, key: document.querySelector('[data-key-plain]').textContent.trim(),
+      product: dd('Product'), time: dd('Date and time'), ref: dd('Order reference'),
       robots: (document.querySelector('meta[name="robots"]') || {}).content || '',
       buttons: Array.from(document.querySelectorAll('.thank-actions button, .thank-actions a')).map(b => b.textContent.trim()) };
   });
-  const parsed = license.parse(conf.key);
-  check('Confirmation heading says the order is complete and delivered', /Order complete/.test(conf.h1), conf.h1);
+  if (!conf.ready) throw new Error('The confirmation page could not confirm order ' + ref + ': ' + conf.failure);
+  const genuine = L.verify(L.secret(), conf.key);
+  check('Confirmation checks the payment with Stripe, then says the order is complete and delivered', conf.ready && /Order complete/.test(conf.h1), conf.h1);
   check('Confirmation shows the product name', conf.product === p.name, conf.product);
   check('Confirmation shows the date and time', !!conf.time, conf.time);
-  check('Confirmation shows the order reference from the return URL', conf.ref === ref, conf.ref);
-  check('Confirmation delivers a valid license key for this product', parsed.ok && parsed.product.id === p.id, conf.key);
+  check('Confirmation shows the Stripe order reference', conf.ref === ref, conf.ref);
+  check('Confirmation delivers the signed license key for this order', !!genuine && genuine.code === p.code && conf.key === L.forOrder(L.secret(), p.code, ref), conf.key);
   check('Confirmation offers Copy key, Save confirmation, Print and Open my puzzles',
     ['Copy key', 'Save confirmation', 'Print', 'Open my puzzles'].every(b => conf.buttons.includes(b)), conf.buttons.join(', '));
   check('Confirmation page is hidden from search engines', /noindex/.test(conf.robots), conf.robots);
@@ -398,9 +437,15 @@ async function captureProduct(browser, p, idx, injected) {
   const st = await page.evaluate(() => window.__kit.state());
   check('Puzzle can be played to the end in the browser', st.solved, st.banner);
   await shot('13-puzzle-solved', { fullPage: true });
-
   await context.close();
-  return { product: p, injected, key: conf.key, time: conf.time, ref, shots, checks, puzzle: info, book: bookTitle(p.books[0]) };
+
+  // The records the server wrote on the Stripe payment during this walkthrough
+  const records = await readRecords(order);
+  check('Delivery recorded on the Stripe payment (time, IP address, browser)',
+    records.gridlock_key === conf.key && records.gridlock_delivered_at && records.gridlock_delivered_ip && +records.gridlock_views >= 1, records.gridlock_delivered_at);
+  check('Unlock recorded on the Stripe payment (time, IP address, browser)',
+    records.gridlock_unlocked_at && records.gridlock_unlocked_ip && +records.gridlock_unlocks >= 1, records.gridlock_unlocked_at);
+  return { product: p, order, key: conf.key, time: conf.time, ref, shots, checks, records, puzzle: info, book: bookTitle(p.books[0]) };
 }
 
 /* -------------------------------------------------------- reviewer key check */
@@ -430,18 +475,17 @@ async function verifyReviewerKey(browser, p, key) {
 
 /* ------------------------------------------------------------------- video */
 
-async function recordVideo(browser, injected) {
-  const p = catalog.byId(VIDEO_PRODUCT);
+async function recordVideo(browser, p, order) {
   const tmp = path.join(OUT, '.video-tmp');
   const context = await browser.newContext({ viewport: VIEW, colorScheme: 'light', locale: 'en-US', acceptDownloads: true, recordVideo: { dir: tmp, size: VIEW } });
-  if (injected) await routeTestCheckout(context);
   await routeRenderer(context);
   const page = await context.newPage();
-  const ref = 'SAMPLE-ORDER-' + p.code;
+  const ref = order.id;
+  const n = p.books.length;
 
   await page.setContent(cardHtml('Fulfillment walkthrough', 'Gridlock Puzzle Co.: from purchase to delivery', [
     'Recorded on ' + dateLong + ' on the live site, ' + BASE,
-    'Product shown: ' + p.name + ' ($' + p.price + '), which unlocks five online puzzle books.',
+    'Product shown: ' + p.name + ' ($' + p.price + '), ' + (n > 1 ? 'which unlocks ' + n + ' online puzzle books.' : 'an online puzzle book.'),
     'Every product is delivered the same way: a license key on the order confirmation page, entered on the Unlock page. Nothing is shipped.',
   ]));
   await page.waitForTimeout(5500);
@@ -459,18 +503,18 @@ async function recordVideo(browser, injected) {
   await page.click('.buy-area .buy-link', { force: true });
   await page.waitForTimeout(2200);
   await page.click('.buy-area .agree input');
-  await caption(page, injected ? 'Box ticked: the buy button turns on. (Test checkout link added for this recording only.)' : 'Box ticked: the buy button turns on and leads to checkout');
+  await caption(page, 'Box ticked: the buy button turns on and leads to Stripe checkout');
   await page.waitForTimeout(3200);
 
-  await page.setContent(cardHtml('Step 2 · Payment (not recorded)', 'The buyer pays on the payment provider’s secure checkout', [
-    'Selecting Buy now opens the payment provider’s hosted checkout page. Card details are entered there, never on this site.',
-    'When the payment is complete, the provider sends the buyer back to the order confirmation page for the product, with its order reference in the address.',
-    injected ? 'Checkout links are not connected on the live site yet, so the next screen is opened directly with a sample order reference.' : 'The next screen is opened directly with a sample order reference.',
+  await page.setContent(cardHtml('Step 2 · Payment (not recorded)', 'The buyer pays on Stripe’s secure checkout', [
+    'Selecting Buy now opens Stripe’s hosted checkout page. Card details are entered there, never on this site.',
+    'When the payment is complete, Stripe sends the buyer back to the order confirmation page for the product, with the order reference in the address.',
+    'The next screen is the confirmation page of a real order placed earlier' + (order.test ? ' in Stripe test mode.' : '.'),
   ]));
   await page.waitForTimeout(8500);
 
   await page.goto(url(p.thankYouPath) + '?session_id=' + ref, { waitUntil: 'networkidle' });
-  await caption(page, 'Step 3 · Order confirmation: the license key is delivered on this page immediately (sample order reference)');
+  await caption(page, 'Step 3 · Order confirmation: the page checks the payment with Stripe, then delivers the license key');
   await page.waitForTimeout(1800);
   await smoothScroll(page, 250, 900);
   await page.waitForSelector('[data-key-ready="true"]', { timeout: 20000 });
@@ -493,12 +537,12 @@ async function recordVideo(browser, injected) {
   await caption(page, 'Step 5 · Open my puzzles takes the key to the Unlock page');
   await page.waitForTimeout(1800);
   await Promise.all([page.waitForURL(u => /\/unlock\/$/.test(new URL(u).pathname)), page.click('[data-open]')]);
-  await caption(page, 'Step 5 · The key is entered and checked on the Unlock page');
+  await caption(page, 'Step 5 · The key is entered and checked by the server on the Unlock page');
   await page.waitForSelector('.unlock-stage.unlocked', { timeout: 15000 });
   await page.waitForTimeout(3200);
   await Promise.all([page.waitForURL(u => /\/library\/$/.test(new URL(u).pathname)), page.click('.unlock-result a.btn.red')]);
   await page.waitForSelector('.spine');
-  await caption(page, 'Step 6 · Library: the five books in The Core Collection are on the shelf');
+  await caption(page, 'Step 6 · Library: ' + (n > 1 ? 'the ' + n + ' books in ' + p.name + ' are on the shelf' : p.name + ' is on the shelf'));
   await page.waitForTimeout(3500);
   await Promise.all([page.waitForURL(/\/play\//), page.click('.spine >> nth=0')]);
   await page.waitForSelector('.pcard', { timeout: 20000 });
@@ -520,8 +564,9 @@ async function recordVideo(browser, injected) {
   await page.setContent(cardHtml('Delivery complete', 'The buyer has received and used the product', [
     'Delivery happened on the order confirmation page immediately after payment: the license key was shown there, and the buyer could copy it, save it as a PDF or print it.',
     'The key unlocked the books on the Unlock page, and they are played in the web browser. Nothing is shipped and there is nothing to download or install.',
+    'The delivery and the unlock were recorded on the payment in Stripe, with the time, IP address and browser.',
   ]));
-  await page.waitForTimeout(5500);
+  await page.waitForTimeout(6500);
 
   const video = page.video();
   await context.close();
@@ -529,7 +574,7 @@ async function recordVideo(browser, injected) {
   await video.saveAs(file);
   await video.delete();
   fs.rmSync(tmp, { recursive: true, force: true });
-  return { file, solved: st.solved };
+  return { file, solved: st.solved, productId: p.id };
 }
 
 /* ---------------------------------------------------------------- the texts */
@@ -549,10 +594,11 @@ function summaryText() {
     '',
     'How products are delivered',
     'Before checkout, the customer must tick a box agreeing to our Terms of Service and Refund Policy; the buy button stays disabled until they do. ' +
-      'The customer pays on our payment provider\'s hosted checkout page. When the payment is complete, the provider redirects the customer to the order confirmation page for their product. ' +
-      'That page shows a license key immediately, together with the product name, the date and time, and the order reference when the payment provider includes it. ' +
+      'The customer pays on Stripe\'s hosted checkout page. When the payment is complete, Stripe redirects the customer to the order confirmation page for their product. ' +
+      'That page checks the payment with Stripe and then shows a license key immediately, together with the product name, the date and time of the order, and the order reference. ' +
       'The customer can copy the key, save a PDF of the order confirmation, or print it. ' +
-      'They enter the key on our Unlock page (' + url('unlock/') + ') and the puzzle books they bought appear in their online library, ready to play. The same key works on any of their own devices.',
+      'They enter the key on our Unlock page (' + url('unlock/') + ') and the puzzle books they bought appear in their online library, ready to play. The same key works on any of their own devices. ' +
+      'Every delivery is recorded on the payment in Stripe: the time, IP address and browser when the key was shown and when it was unlocked.',
     '',
     'When delivery happens',
     'Immediately after payment, on the order confirmation page. There is no waiting period and no manual processing.',
@@ -590,12 +636,12 @@ function reviewerText(reviewers) {
   ].join('\n');
 }
 
-function readmeText(results, reviewers, injectedAny, liveCat) {
-  const connected = products.filter(p => (liveCat.byId(p.id) || {}).checkoutUrl);
+function readmeText(results, missingLinks, noOrder) {
   const todo = [];
   if (!supportEmail) todo.push('SET A SUPPORT EMAIL. src/js/site-config.js has an empty supportEmail, so the Contact page currently shows no way to reach you, and the Delivery Policy, Refund Policy and lost-key instructions all send buyers there. Add the address, rebuild, deploy, then run the kit again so the summary includes it.');
-  if (connected.length < products.length) todo.push('CONNECT CHECKOUT. ' + (products.length - connected.length) + ' of ' + products.length + ' products have no checkout link, so their pages show no buy button or terms checkbox yet. Paste each payment link into checkoutUrl in src/js/products.js, rebuild and deploy. The screenshots and video in this kit used a test link added in the capture browser only.');
-  todo.push('SET THE AFTER-PAYMENT REDIRECT. In each payment link, set the page buyers go to after paying to that product\'s order confirmation page (below), and have the provider add its order or session reference to the address, for example ?session_id=... (Stripe Payment Links can add {CHECKOUT_SESSION_ID}). The page shows any of these parameters as the order reference: session_id, order_id, order, transaction_id, txn_id, token.');
+  if (missingLinks.length) todo.push('CONNECT CHECKOUT. These products have no payment link on the live site, so their pages show no buy button and they are not in this kit: ' + missingLinks.map(p => p.id).join(', ') + '. Paste each payment link into checkoutUrl in src/js/products.js, rebuild and deploy.');
+  if (noOrder.length) todo.push('PLACE AN ORDER. These products have a payment link but no completed order yet, so they are not in this kit: ' + noOrder.map(p => p.id).join(', ') + '. Buy each once (Stripe test mode is fine while the site uses test links), then run the kit again.');
+  todo.push('CHECK THE AFTER-PAYMENT REDIRECT. Each Stripe payment link must send buyers to its order confirmation page with ?session_id={CHECKOUT_SESSION_ID} at the end (list below). Without the session ID the page cannot confirm the payment, and the buyer sees an error instead of their key.');
   todo.push('RUN THE KIT AGAIN (npm run kit) after any of the changes above, so every file matches the live site.');
   return [
     'GRIDLOCK PUZZLE CO.: FULFILLMENT KIT (read me first, for you only)',
@@ -607,23 +653,27 @@ function readmeText(results, reviewers, injectedAny, liveCat) {
     '  reviewer-keys.txt                     One working license key per product, for reviewers.',
     '  Fulfillment-Walkthrough.webm          Screen recording of the full flow (opens in Chrome, Edge, Firefox or VLC).',
     '  screenshots/NN-product/               Every step for every product, plus the saved confirmation PDF.',
-    '  capture-log.json                      Every automated check and its result.',
+    '  capture-log.json                      Every automated check, the orders used and the records read back from Stripe.',
     '',
     'BEFORE YOU SUBMIT',
     ...todo.map((t, i) => '  ' + (i + 1) + '. ' + t),
     '',
-    'ORDER CONFIRMATION PAGES (the after-payment redirect for each product)',
-    ...products.map(p => '  ' + p.name.replace(/’/g, "'").padEnd(34) + url(p.thankYouPath)),
+    'AFTER-PAYMENT REDIRECT FOR EACH STRIPE PAYMENT LINK',
+    ...products.map(p => '  ' + plainName(p).padEnd(34) + url(p.thankYouPath) + '?session_id={CHECKOUT_SESSION_ID}'),
     '',
-    'HOW THE KEYS WORK (so what you tell processors stays accurate)',
-    '  - Keys are created and checked in the buyer\'s browser. There is no server and no customer account.',
-    '  - The confirmation page does not check with the payment provider that a payment happened. Anyone who opens a',
-    '    confirmation address gets a working key. Those pages are hidden from search engines, linked from nowhere on',
-    '    the site, and left out of the sitemap, but the address is all it takes.',
-    '  - A key cannot be switched off once it exists. That includes the reviewer keys, the keys visible in these',
-    '    screenshots and the video, and the keys of refunded orders.',
+    'HOW DELIVERY AND THE RECORDS WORK (so what you tell processors stays accurate)',
+    '  - The order confirmation page asks the server to check the payment with Stripe. Only a paid order gets a key,',
+    '    only for the product its payment link sells, and the same order always gets the same key.',
+    '  - Keys are signed with LICENSE_SECRET, and the Unlock page asks the server to check every key. Changing the',
+    '    secret makes every key issued so far stop working.',
+    '  - The server writes the delivery and each unlock onto the Stripe payment (Payments, open the payment, Metadata):',
+    '    the time, IP address and browser of the first view and the first unlock, how many times each happened, and the',
+    '    latest of each. Use these as evidence in a dispute. This kit\'s own visits are recorded on the orders it used.',
+    '  - A buyer who lost their key: find their payment in Stripe. The key is in its metadata as gridlock_key.',
+    '  - A refund does not switch a key off, and books stay open on devices that were already unlocked.',
+    '  - Reviewer keys (npm run key -- <product-id>) work without an order, and their use is not recorded.',
+    '  - The lock is a soft one: the puzzle files themselves can still be fetched from the site, as before.',
     '  - The site does not email anything. The buyer keeps the key by copying it, saving the PDF or printing.',
-    '  - Replacement keys: node build/issue-key.js <product-id> prints a new key for that product.',
     '',
     'This folder is listed in .gitignore and .vercelignore, so it is never committed or published.',
   ].join('\n');
@@ -631,23 +681,24 @@ function readmeText(results, reviewers, injectedAny, liveCat) {
 
 /* --------------------------------------------------------- overview PDF html */
 
-function overviewHtml(results, reviewers, video, injectedAny) {
+function overviewHtml(results, reviewers, video) {
   const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
   const img = (r, name, cls, alt) => {
     const j = jpegFor(path.join(OUT, r.shots[name]));
     return `<img class="${cls || ''}" src="${rel(j)}" alt="${esc(alt || name)}">`;
   };
   const fig = (r, name, cap, cls) => `<figure>${img(r, name, cls, cap)}<figcaption>${esc(cap)}<span class="file">${esc(r.shots[name])}</span></figcaption></figure>`;
-  const main = results.find(r => r.product.id === VIDEO_PRODUCT) || results[0];
-  const testNote = injectedAny ? `<p class="note"><strong>About the buy button in these screenshots.</strong> Checkout links are not connected on the live site yet, so its product pages do not show the buy button or the terms checkbox today. For these captures a test checkout link was added inside the capture browser only, so the checkbox and the buy button can be shown working. Nothing on the live site was changed. Once checkout is connected, the pages look exactly like this.</p>` : '';
+  const main = results.find(r => r.product.id === video.productId) || results[0];
+  const testMode = results.some(r => r.order.test);
   const allChecks = results.reduce((n, r) => n + r.checks.length, 0);
   const passed = results.reduce((n, r) => n + r.checks.filter(c => c.ok).length, 0);
+  const shownValue = (k, v) => /_ip$/.test(k) ? maskIp(v) : /_at$/.test(k) ? new Date(v).toUTCString().replace('GMT', 'UTC') : v;
   const steps = [
-    ['Agree and check out', 'On the product page, the buyer ticks “I agree to the Terms of Service and Refund Policy”. The buy button stays disabled until the box is ticked. Selecting Buy now opens the payment provider’s checkout.'],
-    ['Pay', 'The buyer pays on the payment provider’s hosted checkout page. Card details never touch this site.'],
-    ['Receive the key', 'When payment is complete, the provider redirects the buyer to the order confirmation page for the product. The page shows the license key immediately, with the product name, date and time, and the order reference. Delivery is complete at this point.'],
+    ['Agree and check out', 'On the product page, the buyer ticks “I agree to the Terms of Service and Refund Policy”. The buy button stays disabled until the box is ticked. Selecting Buy now opens Stripe’s checkout.'],
+    ['Pay', 'The buyer pays on Stripe’s hosted checkout page. Card details never touch this site.'],
+    ['Receive the key', 'When payment is complete, Stripe redirects the buyer to the order confirmation page for the product. The page checks the payment with Stripe and shows the license key immediately, with the product name, date and time, and the order reference. Delivery is complete at this point, and it is recorded on the payment.'],
     ['Keep a copy', 'The buyer can copy the key, save a PDF of the order confirmation, or print it. The key is not emailed, so the page asks the buyer to save it.'],
-    ['Unlock', 'Open my puzzles takes the key to the Unlock page, which checks it and unlocks the books. A buyer can also type the key there on any of their devices.'],
+    ['Unlock', 'Open my puzzles takes the key to the Unlock page. The server checks the key and records the unlock on the payment, and the books open. A buyer can also type the key there on any of their devices.'],
     ['Play', 'The books appear on the buyer’s library shelf and are played in the web browser on a computer, tablet or phone. Every puzzle can also be printed.'],
   ];
   return `<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Gridlock Puzzle Co. Fulfillment Overview</title>
@@ -696,8 +747,8 @@ td.key, .key { font-family: "Courier New", monospace; font-weight: 700; font-siz
 .ok { color: #1d6b35; font-weight: 700; }
 .bad { color: #b0122b; font-weight: 700; }
 .grid4 { display: grid; grid-template-columns: 1fr 1fr; gap: 9pt 12pt; }
-.grid4 figure img { max-height: 2.5in; width: auto; max-width: 100%; }
-ul.checks { columns: 2; column-gap: 16pt; padding-left: 13pt; font-size: 8.6pt; margin: 6pt 0 0; }
+.grid4 figure img { max-height: 2.2in; width: auto; max-width: 100%; }
+ul.checks { columns: 2; column-gap: 16pt; padding-left: 13pt; font-size: 8.2pt; margin: 6pt 0 0; }
 ul.checks li { break-inside: avoid; }
 .small { font-size: 9pt; color: #444; }
 </style></head><body>
@@ -709,13 +760,14 @@ ul.checks li { break-inside: avoid; }
   <div class="meta">
     <div><strong>Website:</strong> ${esc(BASE)}</div>
     <div><strong>Prepared:</strong> ${esc(dateLong)}, from automated walkthroughs of the live site in Microsoft Edge</div>
-    <div><strong>Products covered:</strong> all ${products.length}, each followed from product page to the product in use</div>
+    <div><strong>Products covered:</strong> ${results.length === products.length ? 'all ' + products.length : results.length + ' of ' + products.length}, each followed from product page to the product in use with a real order${testMode ? ' (Stripe test mode)' : ''}</div>
   </div>
   <ol class="toc">
     <li>Business and Fulfillment Summary</li>
     <li>How delivery works</li>
     <li>Step-by-step walkthrough with screenshots</li>
     <li>Every product, checked</li>
+    <li>Delivery records</li>
     <li>Replacement keys</li>
     <li>Refunds</li>
     <li>Reviewer access</li>
@@ -732,12 +784,12 @@ ul.checks li { break-inside: avoid; }
 <section class="page">
   <div class="kicker">2</div>
   <h2>How delivery works</h2>
-  <p>Every product is a set of one or more online puzzle books. What the buyer receives is a <strong>license key</strong> that unlocks those books on the site. The key is delivered on the order confirmation page the moment the payment provider returns the buyer to the site. Nothing is shipped, and there is nothing to download or install.</p>
+  <p>Every product is a set of one or more online puzzle books. What the buyer receives is a <strong>license key</strong> that unlocks those books on the site. The key is delivered on the order confirmation page as soon as Stripe returns the buyer to the site and the payment is confirmed. Nothing is shipped, and there is nothing to download or install.</p>
   <ol class="flow">${steps.map(s => `<li><strong>${esc(s[0])}.</strong> ${esc(s[1])}</li>`).join('')}</ol>
   <h3>Policies buyers agree to</h3>
   <p>Terms of Service: ${esc(url('terms/'))}<br>Refund Policy: ${esc(url('refunds/'))}<br>Delivery Policy: ${esc(url('delivery/'))}</p>
   <h3>Order confirmation pages</h3>
-  <p class="small">The payment provider redirects each buyer to the page for their product after payment:</p>
+  <p class="small">Stripe redirects each buyer to the page for their product after payment, adding the order reference as <span class="key">?session_id=…</span>:</p>
   <table><tr><th>Product</th><th>Price</th><th>Order confirmation page</th></tr>
   ${products.map(p => `<tr><td>${esc(p.name)}</td><td>$${p.price}</td><td>${esc(url(p.thankYouPath))}</td></tr>`).join('')}</table>
 </section>
@@ -745,8 +797,7 @@ ul.checks li { break-inside: avoid; }
 <section class="page">
   <div class="kicker">3</div>
   <h2>Step-by-step walkthrough: ${esc(main.product.name)}</h2>
-  <p>Captured on the live site on ${esc(dateLong)}. Every other product follows the same steps (section 4). A screen recording of this walkthrough is in Fulfillment-Walkthrough.webm.</p>
-  ${testNote}
+  <p>Captured on the live site on ${esc(dateLong)} with a real order${main.order.test ? ' placed in Stripe test mode' : ''}. Every other product follows the same steps (section 4). A screen recording of this walkthrough is in Fulfillment-Walkthrough.webm.</p>
   <div class="step-head"><span class="n">Step 1</span><h3>Product page</h3></div>
   <p>The price, the delivery method (“Instant access with a license key”), a link to the 14-day refund policy and the terms checkbox sit together in the buy box.</p>
   ${fig(main, '02-product-page-top', 'The top of the product page with the buy box.', 'top')}
@@ -758,14 +809,14 @@ ul.checks li { break-inside: avoid; }
 </section>
 
 <section class="page">
-  <div class="step-head"><span class="n">Step 2</span><h3>Payment on the provider’s checkout (described, not captured)</h3></div>
+  <div class="step-head"><span class="n">Step 2</span><h3>Payment on Stripe’s checkout (described, not captured)</h3></div>
   <div class="written">
-    <p>Selecting <strong>Buy now</strong> opens the payment provider’s hosted checkout page. The buyer enters their payment details there; they are never entered on or sent to this site.</p>
-    <p>When the payment is complete, the provider redirects the buyer to the order confirmation page for the product, adding its order or session reference to the address (for example <span class="key">?session_id=…</span>). The confirmation page displays that reference.</p>
-    <p class="small">The screenshots below use the sample reference <span class="key">${esc(main.ref)}</span>.</p>
+    <p>Selecting <strong>Buy now</strong> opens Stripe’s hosted checkout page. The buyer enters their payment details there; they are never entered on or sent to this site.</p>
+    <p>When the payment is complete, Stripe redirects the buyer to the order confirmation page for the product and adds the order reference to the address (<span class="key">?session_id=…</span>). The page uses it to check with Stripe that the order is paid, and for which product, before it shows the key.</p>
+    <p class="small">The screenshots below show order <span class="key">${esc(main.ref)}</span>.</p>
   </div>
   <div class="step-head"><span class="n">Step 3</span><h3>Order confirmation: the product is delivered</h3></div>
-  <p>The page confirms that the order is complete and shows the product, the date and time, the order reference and the license key, with instructions for opening the puzzles.</p>
+  <p>Once Stripe confirms the payment, the page says the order is complete and shows the product, the date and time, the order reference and the license key, with instructions for opening the puzzles. The delivery is recorded on the payment (section 5).</p>
   ${fig(main, '06-order-confirmation-top', 'The order confirmation page as the buyer first sees it.')}
 </section>
 
@@ -797,11 +848,11 @@ ul.checks li { break-inside: avoid; }
 <section class="page">
   <div class="kicker">4</div>
   <h2>Every product, checked</h2>
-  <p>Each product was walked through on the live site in a fresh browser with nothing saved: product page, terms checkbox, order confirmation, saved PDF, print view, unlock, library and a puzzle played to the end. ${passed} of ${allChecks} automated checks passed.</p>
+  <p>Each product was walked through on the live site in a fresh browser with nothing saved, using a real order: product page, terms checkbox, order confirmation, saved PDF, print view, unlock, library, a puzzle played to the end, and the delivery records read back from Stripe. ${passed} of ${allChecks} automated checks passed.</p>
   <table><tr><th>Product</th><th>Price</th><th>Books unlocked</th><th>Puzzle played</th><th>Checks</th></tr>
   ${results.map(r => { const ok = r.checks.filter(c => c.ok).length; return `<tr><td>${esc(r.product.name)}</td><td>$${r.product.price}</td><td>${esc(r.product.books.map(bookTitle).join(', '))}</td><td>${esc(r.book)} #${r.puzzle.n} (${esc(r.puzzle.type)}${r.puzzle.variant ? ', ' + esc(r.puzzle.variant) : ''})</td><td class="${ok === r.checks.length ? 'ok' : 'bad'}">${ok}/${r.checks.length}</td></tr>`; }).join('')}
   </table>
-  <p class="small" style="margin-top:8pt">The license keys visible in the screenshots were issued by the order confirmation pages during these captures. All screenshots, the saved PDFs and every check result are included as separate files.</p>
+  <p class="small" style="margin-top:8pt">The license keys visible in the screenshots belong to the orders used for these captures. All screenshots, the saved PDFs and every check result are included as separate files.</p>
 </section>
 
 ${results.map((r, i) => `<section class="page">
@@ -818,19 +869,30 @@ ${results.map((r, i) => `<section class="page">
 
 <section class="page">
   <div class="kicker">5</div>
+  <h2>Delivery records</h2>
+  <p>Every delivery is recorded automatically on the order’s payment in Stripe. When the order confirmation page shows the key, the server saves the time, IP address and browser of that first view, then counts later views. When the key is unlocked, it does the same for the unlock. These records are kept with the payment, so they can be produced for any order, for example in a dispute. The Privacy Policy and Delivery Policy tell buyers about them.</p>
+  <p>The records for the order in section 3, as written during this walkthrough (IP addresses shortened here):</p>
+  <table><tr><th>Field on the Stripe payment</th><th>Meaning</th><th>Value</th></tr>
+  ${RECORD_FIELDS.filter(([k]) => main.records[k]).map(([k, label]) => `<tr><td class="key" style="font-size:8.4pt">${esc(k)}</td><td>${esc(label)}</td><td style="overflow-wrap:anywhere">${esc(shownValue(k, main.records[k]))}</td></tr>`).join('')}
+  </table>
+  <p class="small" style="margin-top:8pt">The records for every order used in this kit are in capture-log.json.</p>
+</section>
+
+<section class="page">
+  <div class="kicker">6</div>
   <h2>Replacement keys</h2>
   <p>The order confirmation page asks buyers to keep a copy of their key (copy, PDF or print). On any device where the key has been entered, the library page lists it with a Copy key button.</p>
-  <p>If a buyer loses their key, they contact us through the Contact page (${esc(url('contact/'))}) with their order number. We find the order in the payment provider’s records and reply with a new license key for the same product, which they enter on the Unlock page. This is stated in the Delivery Policy and on every order confirmation page.</p>
-  <div class="kicker" style="margin-top:22pt">6</div>
+  <p>If a buyer loses their key, they contact us through the Contact page (${esc(url('contact/'))}) with their order number. We find the order in Stripe, where the key is saved on the payment, and send the same key again. This is stated in the Delivery Policy and on every order confirmation page.</p>
+  <div class="kicker" style="margin-top:22pt">7</div>
   <h2>Refunds</h2>
-  <p>Every purchase can be refunded in full if the buyer asks within 14 days, with no reason needed (${esc(url('refunds/'))}). Buyers ask through the Contact page with their order number. We issue the refund through the payment provider to the original payment method within 5 business days; the provider may take a few more days to show it.</p>
+  <p>Every purchase can be refunded in full if the buyer asks within 14 days, with no reason needed (${esc(url('refunds/'))}). Buyers ask through the Contact page with their order number. We issue the refund through Stripe to the original payment method within 5 business days; the provider may take a few more days to show it.</p>
   <p>Buyers agree to the Refund Policy, together with the Terms of Service, by ticking the box on the product page before the buy button turns on.</p>
 </section>
 
 <section class="page">
-  <div class="kicker">7</div>
+  <div class="kicker">8</div>
   <h2>Reviewer access</h2>
-  <p>One working license key for each product, so you can open every product exactly as a buyer would. Each key below was entered on the live Unlock page on ${esc(dateLong)} and opened the books listed.</p>
+  <p>One working license key for each product, so you can open every product exactly as a buyer would. Each key below was entered on the live Unlock page on ${esc(dateLong)} and opened the books listed. These keys are not linked to an order, so their use is not recorded.</p>
   <ol class="flow">
     <li>Open <strong>${esc(url('unlock/'))}</strong></li>
     <li>Type or paste a key and select <strong>Unlock</strong>.</li>
@@ -848,24 +910,30 @@ ${results.map((r, i) => `<section class="page">
 
 (async () => {
   const t0 = Date.now();
-  fs.rmSync(OUT, { recursive: true, force: true });
-  fs.mkdirSync(PDFIMG, { recursive: true });
   console.log('Fulfillment kit for ' + BASE);
+  const stop = msg => { console.error(msg); process.exit(1); };
+  if (!L.secret()) stop('LICENSE_SECRET is not set. Put the same value as on Vercel into .env.local (see "Delivery records" in the README).');
+  if (!S.configured()) stop('STRIPE_SECRET_KEY is not set. Put the same key the live site uses into .env.local (see "Delivery records" in the README).');
 
   const liveCat = await liveCatalog();
-  const injectedFor = p => !(liveCat.byId(p.id) || {}).checkoutUrl;
-  const injectedAny = products.some(injectedFor);
-  if (injectedAny) console.log('  Products without a checkout link use a test link in the capture browser only.');
+  const orders = await findOrders(liveCat);
+  const missingLinks = products.filter(p => !(liveCat.byId(p.id) || {}).checkoutUrl);
+  const noOrder = products.filter(p => (liveCat.byId(p.id) || {}).checkoutUrl && !orders[p.id]);
+  const shown = products.filter(p => orders[p.id]);
+  if (missingLinks.length) console.log('  No payment link on the live site: ' + missingLinks.map(p => p.id).join(', '));
+  if (noOrder.length) console.log('  No completed order yet: ' + noOrder.map(p => p.id).join(', '));
+  if (!shown.length) stop('No product has a completed order to show. Buy at least one product through the live site, then run the kit again.');
 
+  fs.rmSync(OUT, { recursive: true, force: true });
+  fs.mkdirSync(PDFIMG, { recursive: true });
   const browser = await chromium.launch({ channel: CHANNEL, headless: true });
   const results = [];
   try {
-    for (const [i, p] of products.entries()) {
+    for (const p of shown) {
       process.stdout.write('  ' + p.name + ' ... ');
-      const r = await captureProduct(browser, p, i, injectedFor(p));
+      const r = await captureProduct(browser, p, products.indexOf(p), orders[p.id], liveCat.byId(p.id).checkoutUrl);
       results.push(r);
-      const ok = r.checks.filter(c => c.ok).length;
-      console.log(ok + '/' + r.checks.length + ' checks');
+      console.log(r.checks.filter(c => c.ok).length + '/' + r.checks.length + ' checks');
     }
 
     console.log('  Reviewer keys ...');
@@ -878,11 +946,12 @@ ${results.map((r, i) => `<section class="page">
     }
 
     console.log('  Screen recording ...');
-    const video = await recordVideo(browser, injectedFor(catalog.byId(VIDEO_PRODUCT)));
+    const videoProduct = orders[VIDEO_PRODUCT] ? catalog.byId(VIDEO_PRODUCT) : shown[0];
+    const video = await recordVideo(browser, videoProduct, orders[videoProduct.id]);
 
     console.log('  Overview PDF ...');
     const htmlFile = path.join(OUT, '.overview.html');
-    fs.writeFileSync(htmlFile, overviewHtml(results, reviewers, video, injectedAny));
+    fs.writeFileSync(htmlFile, overviewHtml(results, reviewers, video));
     const pdfContext = await browser.newContext();
     await pdfContext.route('https://kit.render/overview/**', async route => {
       const f = path.join(OUT, decodeURIComponent(new URL(route.request().url()).pathname.slice('/overview/'.length)));
@@ -902,19 +971,21 @@ ${results.map((r, i) => `<section class="page">
 
     fs.writeFileSync(path.join(OUT, 'Business-and-Fulfillment-Summary.txt'), summaryText() + '\n');
     fs.writeFileSync(path.join(OUT, 'reviewer-keys.txt'), reviewerText(reviewers) + '\n');
-    fs.writeFileSync(path.join(OUT, 'READ-ME-FIRST.txt'), readmeText(results, reviewers, injectedAny, liveCat) + '\n');
+    fs.writeFileSync(path.join(OUT, 'READ-ME-FIRST.txt'), readmeText(results, missingLinks, noOrder) + '\n');
     fs.writeFileSync(path.join(OUT, 'capture-log.json'), JSON.stringify({
-      site: BASE, generated: today.toISOString(), browser: CHANNEL, testCheckoutLinkAdded: products.filter(injectedFor).map(p => p.id),
-      products: results.map(r => ({ id: r.product.id, issuedKey: r.key, orderReference: r.ref, confirmationTime: r.time, puzzle: r.puzzle, checks: r.checks, screenshots: r.shots })),
+      site: BASE, generated: today.toISOString(), browser: CHANNEL,
+      notShown: { noPaymentLink: missingLinks.map(p => p.id), noOrder: noOrder.map(p => p.id) },
+      products: results.map(r => ({ id: r.product.id, order: r.order, issuedKey: r.key, confirmationTime: r.time, puzzle: r.puzzle, checks: r.checks, stripeRecords: r.records, screenshots: r.shots })),
       reviewerKeys: reviewers.map(r => ({ id: r.product.id, key: r.key, verified: r.check })),
-      video: { file: rel(video.file), puzzleSolved: video.solved },
+      video: { file: rel(video.file), product: video.productId, puzzleSolved: video.solved },
     }, null, 2));
     fs.rmSync(htmlFile, { force: true });
     fs.rmSync(PDFIMG, { recursive: true, force: true });
 
     const all = results.flatMap(r => r.checks);
     const failed = all.filter(c => !c.ok).length + reviewers.filter(r => !r.check.ok).length + (video.solved ? 0 : 1);
-    console.log('Done in ' + Math.round((Date.now() - t0) / 1000) + 's: ' + (all.length - all.filter(c => !c.ok).length) + '/' + all.length + ' checks passed, ' +
+    console.log('Done in ' + Math.round((Date.now() - t0) / 1000) + 's: ' + shown.length + ' of ' + products.length + ' products, ' +
+      (all.length - all.filter(c => !c.ok).length) + '/' + all.length + ' checks passed, ' +
       reviewers.filter(r => r.check.ok).length + '/' + reviewers.length + ' reviewer keys verified.');
     console.log('Kit: ' + OUT);
     if (!supportEmail) console.log('Note: supportEmail is empty in src/js/site-config.js; see READ-ME-FIRST.txt.');

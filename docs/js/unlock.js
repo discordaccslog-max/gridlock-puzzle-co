@@ -1,4 +1,4 @@
-/* Unlock page: segmented key entry that auto-advances on typing or paste. */
+/* Unlock page: segmented key entry that auto-advances on typing or paste. The server checks a key before it is saved. */
 (function () {
   var root = document.querySelector('[data-unlock]');
   if (!root) return;
@@ -53,10 +53,37 @@
     input.addEventListener('focus', function () { input.select(); });
   });
 
+  var submitBtn = root.querySelector('[type="submit"]');
+  var pendingOrder = null;
+
   form.addEventListener('submit', function (e) {
     e.preventDefault();
-    var r = license.addKey(value());
+    if (submitBtn.disabled) return;
+    var r = license.parse(value());
     if (!r.ok) { showError(r.message); stage.classList.remove('unlocked'); return; }
+    if (r.product.tier === 'admin') return unlocked(license.addKey(r.key));
+    // The server checks the key's signature and records the unlock with the order.
+    busy(true);
+    fetch('../api/activate/', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ key: r.key, session_id: pendingOrder || undefined }),
+    })
+      .then(function (res) { return res.json().catch(function () { return { ok: false }; }); })
+      .then(function (d) {
+        busy(false);
+        if (!d.ok) { showError(d.message || 'We could not check your key right now. Please try again in a moment.'); stage.classList.remove('unlocked'); return; }
+        unlocked(license.addKey(r.key));
+      })
+      .catch(function () { busy(false); showError('We could not reach our server to check your key. Check your connection and try again.'); });
+  });
+
+  function busy(on) {
+    submitBtn.disabled = on;
+    submitBtn.textContent = on ? 'Checking…' : 'Unlock';
+    if (on) clearError();
+  }
+
+  function unlocked(r) {
     clearError();
     entry.classList.add('good');
     var books = r.product.books.map(function (id) { return catalog.book(id); });
@@ -75,13 +102,18 @@
       result.innerHTML = '';
       inputs[0].focus();
     });
-  });
+  }
 
   function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;'); }
 
   // a key handed over from the thank-you page
   var pending = null;
-  try { pending = sessionStorage.getItem('gridlock.pendingKey'); sessionStorage.removeItem('gridlock.pendingKey'); } catch (e) { pending = null; }
+  try {
+    pending = sessionStorage.getItem('gridlock.pendingKey');
+    pendingOrder = sessionStorage.getItem('gridlock.pendingOrder');
+    sessionStorage.removeItem('gridlock.pendingKey');
+    sessionStorage.removeItem('gridlock.pendingOrder');
+  } catch (e) { pending = null; }
   if (pending) {
     fill(pending, 0);
     var note = root.querySelector('[data-pending-note]');

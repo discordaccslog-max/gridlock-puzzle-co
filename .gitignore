@@ -6,3 +6,5 @@ Thumbs.db
 .vercel
 
 fulfillment-kit/
+.env.local
+.env*.local

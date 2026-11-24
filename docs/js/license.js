@@ -1,55 +1,19 @@
 /*
- * License keys, entirely in the browser.
- * Format: GRID-<product code>-<5 random>-<5 random>-<4 check>, e.g. GRID-DG-7KQ4M-X9D2P-H6TR.
+ * License keys in the browser.
+ * Format: GRID-<product code>-<14 characters>, shown as GRID-DG-7KQ4M-X9D2P-H6TR.
  * The alphabet leaves out characters that are easy to confuse (0, O, 1, I, L).
- * The check characters are calculated from the product code and the random section.
- * Unlocked keys are kept in this browser's localStorage only.
+ * Keys are issued and checked by the server (api/), which signs them with a secret, so this
+ * file only checks their shape. The Unlock page saves a key here after the server accepts it;
+ * unlocked keys are kept in this browser's localStorage. Administrator keys are checked here.
  */
 (function (root) {
   var ALPHABET = '23456789ABCDEFGHJKMNPQRSTUVWXYZ';
   var PREFIX = 'GRID';
   var STORE = 'gridlock.keys.v1';
-  var BODY = 10;
-  var CHECK = 4;
+  var LENGTH = 14;
 
-  function fnv(str) {
-    var h = 0x811c9dc5;
-    for (var i = 0; i < str.length; i++) {
-      h ^= str.charCodeAt(i);
-      h = Math.imul(h, 0x01000193) >>> 0;
-    }
-    // final avalanche so neighbouring inputs produce unrelated check values
-    h ^= h >>> 16; h = Math.imul(h, 0x85ebca6b) >>> 0;
-    h ^= h >>> 13; h = Math.imul(h, 0xc2b2ae35) >>> 0;
-    h ^= h >>> 16;
-    return h >>> 0;
-  }
-
-  function checksum(code, body) {
-    var n = fnv(PREFIX + '|' + code + '|' + body + '|gridlock-puzzle-co') % Math.pow(ALPHABET.length, CHECK);
-    var out = '';
-    for (var i = 0; i < CHECK; i++) { out = ALPHABET[n % ALPHABET.length] + out; n = Math.floor(n / ALPHABET.length); }
-    return out;
-  }
-
-  function randomBody() {
-    var out = '';
-    var limit = 256 - (256 % ALPHABET.length);
-    var buf = new Uint8Array(32);
-    while (out.length < BODY) {
-      root.crypto.getRandomValues(buf);
-      for (var i = 0; i < buf.length && out.length < BODY; i++) if (buf[i] < limit) out += ALPHABET[buf[i] % ALPHABET.length];
-    }
-    return out;
-  }
-
-  function format(code, body, check) {
-    return [PREFIX, code, body.slice(0, 5), body.slice(5), check].join('-');
-  }
-
-  function generate(code) {
-    var body = randomBody();
-    return format(code, body, checksum(code, body));
+  function format(code, rest) {
+    return [PREFIX, code, rest.slice(0, 5), rest.slice(5, 10), rest.slice(10)].join('-');
   }
 
   function products() { return root.GRIDLOCK_PRODUCTS; }
@@ -105,7 +69,7 @@
       books: products().books.map(function (b) { return b.id; }) };
   }
 
-  // Returns { ok, key, product } or { ok: false, message }.
+  // Checks a key's shape. Returns { ok, key, product } or { ok: false, message }.
   function parse(input) {
     var raw = String(input || '').toUpperCase().replace(/[\s‐-―-]+/g, '');
     if (raw.indexOf(PREFIX) === 0) raw = raw.slice(PREFIX.length);
@@ -115,19 +79,18 @@
       if (/[0O1IL]/.test(bad)) return { ok: false, message: 'Keys never use 0, O, 1, I or L. Check for a similar-looking character, such as Q, D, 7 or J.' };
       return { ok: false, message: 'That key has a character that keys never contain. Keys use only letters and the digits 2 to 9.' };
     }
-    if (raw.length !== 2 + BODY + CHECK) {
-      return { ok: false, message: 'That key is ' + (raw.length < 2 + BODY + CHECK ? 'too short' : 'too long') + '. A key has 16 characters after GRID, for example GRID-DG-7KQ4M-X9D2P-H6TR.' };
+    if (raw.length !== 2 + LENGTH) {
+      return { ok: false, message: 'That key is ' + (raw.length < 2 + LENGTH ? 'too short' : 'too long') + '. A key has 16 characters after GRID, for example GRID-DG-7KQ4M-X9D2P-H6TR.' };
     }
-    var code = raw.slice(0, 2), body = raw.slice(2, 2 + BODY), check = raw.slice(2 + BODY);
+    var code = raw.slice(0, 2), rest = raw.slice(2);
     if (code === ADMIN_CODE) {
-      var adminKey = format(code, body, check);
+      var adminKey = format(code, rest);
       if (ADMIN_HASHES.indexOf(sha256(adminKey)) >= 0) return { ok: true, key: adminKey, product: adminProduct() };
       return { ok: false, message: 'That key does not check out. Compare it with the key on your order confirmation page; one character may be off.' };
     }
     var product = products().byCode(code);
     if (!product) return { ok: false, message: 'The product code “' + code + '” is not one of ours. It is the two characters right after GRID.' };
-    if (checksum(code, body) !== check) return { ok: false, message: 'That key does not check out. Compare it with the key on your order confirmation page; one character may be off.' };
-    return { ok: true, key: format(code, body, check), product: product };
+    return { ok: true, key: format(code, rest), product: product };
   }
 
   function read() {
@@ -138,7 +101,8 @@
     try { root.localStorage.setItem(STORE, JSON.stringify(list)); return true; } catch (e) { return false; }
   }
 
-  // Saved keys are re-validated on every read, so edited storage cannot unlock anything.
+  // Saved keys were accepted by the server when they were entered; here they are re-read and
+  // checked for shape only.
   function savedKeys() {
     var out = [];
     read().forEach(function (entry) {
@@ -168,7 +132,7 @@
   function signOut() { try { root.localStorage.removeItem(STORE); } catch (e) { /* storage unavailable */ } }
 
   root.GRIDLOCK_LICENSE = {
-    ALPHABET: ALPHABET, generate: generate, parse: parse, addKey: addKey, savedKeys: savedKeys,
-    unlockedBooks: unlockedBooks, signOut: signOut, checksum: checksum, format: format,
+    ALPHABET: ALPHABET, parse: parse, addKey: addKey, savedKeys: savedKeys,
+    unlockedBooks: unlockedBooks, signOut: signOut, format: format,
   };
 })(this);

@@ -10,7 +10,8 @@
     "all": "node build/generate.js && node build/verify.js && node build/site.js && node build/check-site.js",
     "serve": "node build/serve.js",
     "kit": "node build/fulfillment-kit.js",
-    "key": "node build/issue-key.js"
+    "key": "node build/issue-key.js",
+    "setup-secret": "node build/setup-secret.js"
   },
   "engines": {
     "node": ">=18"

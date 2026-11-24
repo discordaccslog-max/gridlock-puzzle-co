@@ -23,6 +23,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap">
 <link rel="stylesheet" href="../../css/style.css">
+<script>if(/\.github\.io$/.test(location.hostname))location.replace('https://gridlock-puzzle-co.vercel.app/'+location.pathname.split('/').slice(2).join('/')+location.search+location.hash);</script>
 <script>try{var t=localStorage.getItem('gridlock.theme');if(t==='dark'||t==='light')document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
 
 </head>
@@ -44,13 +45,25 @@
 </header>
 <main id="main">
 <div class="wrap section" data-thank-you="variant-sudoku">
+  <div data-state="loading" role="status">
+    <span class="kicker">Order confirmation</span>
+    <h1>Checking your payment</h1>
+    <p class="lede">We are confirming your order with our payment provider. Your license key appears here in a moment.</p>
+  </div>
+  <div data-state="failed" hidden>
+    <span class="kicker">Order confirmation</span>
+    <h1>We could not confirm this order</h1>
+    <p class="lede" data-fail-message role="alert"></p>
+    <p class="btn-row"><button type="button" class="btn red" data-retry hidden>Try again</button><a class="btn ghost" href="../../contact/">Contact us</a></p>
+  </div>
+  <div data-state="ready" hidden>
   <span class="kicker">Order confirmation</span>
   <h1>Order complete. Your puzzles are delivered.</h1>
-  <p class="lede">Thank you for your purchase. <strong>Variant Sudoku: Expert Edition</strong> is delivered as the license key on this page, ready to use right now. Nothing is shipped.</p>
+  <p class="lede">Thank you for your purchase. Your payment is confirmed, and <strong>Variant Sudoku: Expert Edition</strong> is delivered as the license key on this page, ready to use right now. Nothing is shipped.</p>
   <dl class="order-details" aria-label="Order details">
     <div><dt>Product</dt><dd>Variant Sudoku: Expert Edition</dd></div>
     <div><dt>Date and time</dt><dd data-order-time></dd></div>
-    <div data-order-ref-row hidden><dt>Order reference</dt><dd data-order-ref></dd></div>
+    <div><dt>Order reference</dt><dd data-order-ref></dd></div>
     <div><dt>Delivery</dt><dd>Digital: license key shown below</dd></div>
   </dl>
   <div class="keybox">
@@ -77,10 +90,11 @@
     </ol>
     <h2>This key opens</h2>
     <ul class="thank-books"><li>Variant Sudoku</li></ul>
-    <p>If you ever lose your key, <a href="../../contact/">contact us through the Contact page</a> with your order number for a replacement.</p>
-    <p class="muted">Your purchase is covered by our <a href="../../terms/">Terms of Service</a>, <a href="../../refunds/">Refund Policy</a> and <a href="../../delivery/">Delivery Policy</a>.</p>
+    <p>If you ever lose your key, <a href="../../contact/">contact us through the Contact page</a> with your order number and we will send it to you again.</p>
   </section>
-  <noscript><p class="note">This page needs JavaScript turned on to create your key. Please turn it on and reload the page.</p></noscript>
+  </div>
+  <p class="muted">Your purchase is covered by our <a href="../../terms/">Terms of Service</a>, <a href="../../refunds/">Refund Policy</a> and <a href="../../delivery/">Delivery Policy</a>.</p>
+  <noscript><p class="note">This page needs JavaScript turned on to confirm your payment and show your key. Please turn it on and reload the page.</p></noscript>
 </div>
 </main>
 <footer class="site-footer">

@@ -1,6 +1,6 @@
 'use strict';
-// Page shell shared by every page. All links are relative so the site works at any path,
-// including a GitHub Pages project path.
+// Page shell shared by every page. All links are relative so the site works at any path.
+// The GitHub Pages copy redirects to the main site, which runs the order and key checks.
 
 const SITE = {
   name: 'Gridlock Puzzle Co.',
@@ -98,6 +98,7 @@ ${opts.noindex ? '<meta name="robots" content="noindex, nofollow">' : `<link rel
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap">
 <link rel="stylesheet" href="${r}css/style.css">
+<script>if(/\\.github\\.io$/.test(location.hostname))location.replace('${SITE.url}'+location.pathname.split('/').slice(2).join('/')+location.search+location.hash);</script>
 <script>try{var t=localStorage.getItem('gridlock.theme');if(t==='dark'||t==='light')document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
 ${opts.head || ''}
 </head>

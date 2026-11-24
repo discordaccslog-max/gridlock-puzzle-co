@@ -4,6 +4,7 @@ const { SITE } = require('./layout');
 
 const updated = `<p class="updated">Last updated: ${SITE.updated}</p>`;
 const revised = `<p class="updated">Last updated: November 11, 2026</p>`;
+const recordsUpdated = `<p class="updated">Last updated: November 24, 2026</p>`;
 const contactLink = r => `<a href="${r}contact/">contact us through the Contact page</a>`;
 
 function head(title, kicker) {
@@ -11,12 +12,12 @@ function head(title, kicker) {
 }
 
 const FAQ = r => [
-  ['How do license keys work?', `<p>Every purchase comes with a license key, a code that looks like <code>GRID-DG-7KQ4M-X9D2P-H6TR</code>. The two characters after GRID say which product it is for, and the last group is a check that catches typing mistakes. Your key appears on your order confirmation page the moment your payment goes through. Enter it once and your puzzle books open in your library. There is no account and no password.</p>`],
-  ['What do I receive after I buy?', `<p>You receive a license key, delivered on the order confirmation page the moment your payment goes through. The key unlocks the online puzzle book or books you bought: enter it on the <a href="${r}unlock/">Unlock page</a> and they appear in your library, ready to play in your web browser on a computer, tablet or phone. There are no files to download and nothing is shipped.</p><p>The confirmation page lets you copy your key, save a PDF of your order confirmation, or print it. We do not send the key by email, so please keep a copy. Every puzzle can also be printed for your own use.</p>`],
+  ['How do license keys work?', `<p>Every purchase comes with a license key, a code that looks like <code>GRID-DG-7KQ4M-X9D2P-H6TR</code>. The two characters after GRID say which product it is for, and part of the key is a check that catches typing mistakes. Your key appears on your order confirmation page as soon as our payment provider confirms your payment. Enter it once and your puzzle books open in your library. There is no account and no password.</p>`],
+  ['What do I receive after I buy?', `<p>You receive a license key, delivered on the order confirmation page as soon as your payment is confirmed. The key unlocks the online puzzle book or books you bought: enter it on the <a href="${r}unlock/">Unlock page</a> and they appear in your library, ready to play in your web browser on a computer, tablet or phone. There are no files to download and nothing is shipped.</p><p>The confirmation page lets you copy your key, save a PDF of your order confirmation, or print it. We do not send the key by email, so please keep a copy. Every puzzle can also be printed for your own use.</p>`],
   ['Where do I enter my key?', `<p>On the <a href="${r}unlock/">Unlock page</a>, which you can reach at any time from the <strong>Have a key?</strong> link at the top of every page. Type the characters after GRID, or paste the whole key into the first box. The confirmation page also has an <strong>Open my puzzles</strong> button that fills it in for you.</p>`],
   ['How should I save my key?', `<p>Copy it somewhere you keep important things: a password manager, a note on your phone, or the email you used to pay. The confirmation page has a <strong>Copy key</strong> button, a <strong>Save confirmation</strong> button that downloads a PDF of your order confirmation with your key, and a <strong>Print</strong> button. Your library page also lists the keys saved on that device.</p>`],
   ['Can I use more than one device?', `<p>Yes. The same key works on any number of your own computers, tablets and phones. On each new device, open the Unlock page and enter the key again.</p>`],
-  ['What if I lose my key?', `<p>If the device you unlocked still shows your library, the key is listed there. Otherwise, ${contactLink(r)} with your order number and we will send a replacement.</p>`],
+  ['What if I lose my key?', `<p>If the device you unlocked still shows your library, the key is listed there. Otherwise, ${contactLink(r)} with your order number and we will send your key to you again.</p>`],
   ['What is the difference between Core Books and Expert Editions?', `<p>The five Core Books cover the classics: sudoku, word search, cryptograms, logic grids and crosswords, each with a range from easy to expert. The Expert Editions are built to be harder in specific ways you can check: added sudoku rules such as cages and irregular regions, larger logic grids with more categories, full 15×15 crossword grids, fewer starting digits, and cryptograms with the word breaks removed. Each Expert Edition page lists exactly how it differs.</p>`],
   ['Can I print the puzzles?', `<p>Yes. Every puzzle has a <strong>Print</strong> button that produces a clean page with just the puzzle and its clues, and an <strong>Answer key</strong> button that prints the solution separately.</p>`],
   ['Does my progress sync between devices?', `<p>No. Progress is saved in the browser on each device, and it never leaves that device. A puzzle you start on your laptop will not appear half-finished on your phone. Each puzzle has a <strong>Reset progress</strong> button if you want to start it again.</p>`],
@@ -91,26 +92,28 @@ const pages = {
   delivery: r => ({
     title: 'Delivery Policy · Gridlock Puzzle Co.',
     description: 'How Gridlock Puzzle Co. delivers its digital puzzle books: a license key shown on the order confirmation page immediately after payment. No physical shipment.',
-    body: head('Delivery Policy', 'Policies') + `<div class="wrap prose">${revised}
+    body: head('Delivery Policy', 'Policies') + `<div class="wrap prose">${recordsUpdated}
 <h2>What you receive</h2>
 <p>Every Gridlock Puzzle Co. product is digital: one or more online puzzle books that you play in a web browser. When you buy, you receive a license key that unlocks the book or books in your purchase. There are no files to download and nothing to install.</p>
 <h2>How delivery works, step by step</h2>
 <ol>
-<li><strong>Agree and check out.</strong> On the product page, tick the box to agree to the <a href="${r}terms/">Terms of Service</a> and <a href="${r}refunds/">Refund Policy</a>, then select <strong>Buy now</strong>. You pay on our payment provider\u2019s secure checkout page.</li>
-<li><strong>Payment goes through.</strong> As soon as your payment is complete, the payment provider sends you back to our order confirmation page for your product.</li>
-<li><strong>Your key is delivered.</strong> The order confirmation page shows your license key straight away, together with the product name, the date and time, and your order reference when the payment provider supplies one. Delivery is complete at this point.</li>
+<li><strong>Agree and check out.</strong> On the product page, tick the box to agree to the <a href="${r}terms/">Terms of Service</a> and <a href="${r}refunds/">Refund Policy</a>, then select <strong>Buy now</strong>. You pay on the secure checkout page of our payment provider, Stripe.</li>
+<li><strong>Payment goes through.</strong> As soon as your payment is complete, Stripe sends you back to our order confirmation page for your product.</li>
+<li><strong>Your key is delivered.</strong> The order confirmation page checks your payment with Stripe, then shows your license key straight away, together with the product name, the date and time of your order, and your order reference. Delivery is complete at this point.</li>
 <li><strong>Keep a copy.</strong> Use <strong>Copy key</strong>, <strong>Save confirmation</strong> (a PDF of your order details and key) or <strong>Print</strong>. We do not send the key by email, so please save it before you leave the page.</li>
-<li><strong>Unlock.</strong> Select <strong>Open my puzzles</strong>, or enter your key on the <a href="${r}unlock/">Unlock page</a>. Your books appear on your library shelf right away.</li>
+<li><strong>Unlock.</strong> Select <strong>Open my puzzles</strong>, or enter your key on the <a href="${r}unlock/">Unlock page</a>. We check the key, and your books appear on your library shelf right away.</li>
 <li><strong>Play.</strong> Open a book and play in your browser on a computer, tablet or phone. Every puzzle can also be printed.</li>
 </ol>
 <h2>When delivery happens</h2>
 <p>Immediately after your payment is complete, on the order confirmation page. There is no waiting period and no manual processing.</p>
 <h2>No physical shipment</h2>
 <p>Nothing is mailed or shipped, and there are no shipping charges.</p>
+<h2>Delivery records</h2>
+<p>So that we can confirm delivery if there is ever a question about an order, we keep a record with your order at Stripe of when your license key was shown on the order confirmation page and when it was unlocked, with the IP address and browser used and how many times each happened. Our <a href="${r}privacy/">Privacy Policy</a> explains how we use it.</p>
 <h2>Using more than one device</h2>
 <p>The same key works on any of your own devices. On each new device, enter the key on the <a href="${r}unlock/">Unlock page</a>. Your puzzle progress is saved separately on each device.</p>
 <h2>Lost keys</h2>
-<p>If you lose your key, ${contactLink(r)} with your order number and we will send you a replacement.</p>
+<p>If you lose your key, ${contactLink(r)} with your order number and we will send your key to you again.</p>
 <h2>How long you have access</h2>
 <p>Online access continues for as long as Gridlock Puzzle Co. operates. Every puzzle can also be printed, along with its answer key, so you can keep a paper copy.</p>
 </div>`,
@@ -118,21 +121,24 @@ const pages = {
 
   privacy: r => ({
     title: 'Privacy Policy · Gridlock Puzzle Co.',
-    description: 'Gridlock Puzzle Co. uses no cookies, analytics or advertising trackers. License keys and puzzle progress stay in your own browser.',
-    body: head('Privacy Policy', 'Policies') + `<div class="wrap prose">${updated}
+    description: 'Gridlock Puzzle Co. uses no cookies, analytics or advertising trackers. Puzzle progress stays in your own browser, and we keep a delivery record with each order.',
+    body: head('Privacy Policy', 'Policies') + `<div class="wrap prose">${recordsUpdated}
 <p>This policy explains what information Gridlock Puzzle Co. handles and why. The short version: we collect as little as we can, and we never sell it.</p>
 <h2>No cookies, analytics or trackers</h2>
 <p>This site uses no cookies, no analytics and no advertising trackers.</p>
-<h2>Your keys and progress stay on your device</h2>
-<p>License keys you enter and your puzzle progress are saved only in your own browser’s local storage. They are never sent to us or anyone else. You can remove your keys at any time with <strong>Sign out on this device</strong> in your library, and clear a puzzle’s progress with <strong>Reset progress</strong>. Clearing your browser’s site data removes both.</p>
+<h2>Your progress stays on your device</h2>
+<p>Your puzzle progress is saved only in your own browser’s local storage and is never sent to us or anyone else. License keys you unlock are saved there too. You can remove your keys at any time with <strong>Sign out on this device</strong> in your library, and clear a puzzle’s progress with <strong>Reset progress</strong>. Clearing your browser’s site data removes both.</p>
+<h2>Delivery and unlock records</h2>
+<p>When your order confirmation page opens, it asks our server to confirm your payment with Stripe and to issue your license key. When you unlock a key, our server checks it. Each time, we record the date and time, your IP address and your browser type (the description your browser sends with every request), and store this with your order at Stripe, together with your license key and how many times it was shown and unlocked. Keys that are not linked to an order are checked but not recorded.</p>
+<p>We use these records only to confirm that your order was delivered, to help you if you lose your key, to respond to payment disputes and to prevent fraud. They are kept with your order information, as described below.</p>
 <h2>Payments</h2>
-<p>Payments are handled by a third-party payment provider, which collects your payment details under its own privacy policy. Gridlock Puzzle Co. never sees your full card details.</p>
+<p>Payments are handled by our payment provider, Stripe, which collects your payment details under its own privacy policy. Gridlock Puzzle Co. never sees your full card details.</p>
 <h2>Order information we receive</h2>
-<p>From the payment provider we receive order information: your name, your email address, the products you bought and your country. We use it only to provide support, to process refunds, and to meet our tax and accounting obligations.</p>
+<p>From Stripe we receive order information: your name, your email address, the products you bought and your country. We use it only to provide support, to process refunds, and to meet our tax and accounting obligations.</p>
 <h2>We never sell your information</h2>
 <p>Your personal information is never sold, and never shared for advertising.</p>
 <h2>Hosting and fonts</h2>
-<p>Like any website, the pages are delivered by a hosting provider, and the typefaces are delivered by Google Fonts. Your browser contacts their servers to load the pages and fonts, which means they receive the standard technical details of a web request, such as your IP address. We do not receive that information, and none of your keys or progress is included in those requests.</p>
+<p>Like any website, the pages are delivered by a hosting provider, and the typefaces are delivered by Google Fonts. Your browser contacts their servers to load the pages and fonts, which means they receive the standard technical details of a web request, such as your IP address. Apart from the delivery and unlock records described above, we do not receive that information, and your puzzle progress is never included in those requests.</p>
 <h2>Your rights</h2>
 <p>Wherever you live, you can ask us to:</p>
 <ul>
@@ -143,7 +149,7 @@ const pages = {
 </ul>
 <p>These include your rights under the EU and UK General Data Protection Regulation (GDPR) and the California Consumer Privacy Act (CCPA). To use any of them, ${contactLink(r)}. We will not treat you differently for exercising your rights.</p>
 <h2>How long we keep information</h2>
-<p>We keep order information only as long as we need it to support your purchase and to meet legal and accounting requirements, such as keeping tax records for the period the law requires. After that we delete it.</p>
+<p>We keep order information, including delivery and unlock records, only as long as we need it to support your purchase and to meet legal and accounting requirements, such as keeping tax records for the period the law requires. After that we delete it.</p>
 <h2>Children</h2>
 <p>This site is not directed at children under 13, and we do not knowingly collect personal information from them.</p>
 <h2>Changes to this policy</h2>
