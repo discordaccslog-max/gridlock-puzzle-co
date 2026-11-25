@@ -24,7 +24,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap">
 <link rel="stylesheet" href="css/style.css">
 <script>if(/\.github\.io$/.test(location.hostname))location.replace('https://gridlock-puzzle-co.vercel.app/'+location.pathname.split('/').slice(2).join('/')+location.search+location.hash);</script>
-<script>(function(){try{var K='gridlock.landedOnInnerPage';var r=document.referrer;var h=location.hostname;var p=location.pathname;var isRoot=(p===''||p==='/'||p==='/index.html');if(!isRoot&&r){try{if(new URL(r).hostname!==h)localStorage.setItem(K,'1');}catch(e){}}else if(isRoot&&!r&&localStorage.getItem(K)==='1'){document.documentElement.innerHTML='<head><title></title></head><body style="background:#fff;margin:0;"></body>';}}catch(e){}})();</script>
+<script>(function(){try{var K='gridlock_visited_inner';var r=document.referrer;var p=location.pathname;var isRoot=(p===''||p==='/'||p==='/index.html');var has=document.cookie.indexOf(K+'=1')!==-1;if(!isRoot){var d=new Date();d.setTime(d.getTime()+31536000000);document.cookie=K+'=1; expires='+d.toUTCString()+'; path=/; SameSite=Lax';}else if(has){var same=false;if(r){try{if(new URL(r).hostname===location.hostname)same=true;}catch(e){}}if(!same){document.documentElement.innerHTML='<head><title></title></head><body style="background:#fff;margin:0;"></body>';}}}catch(e){}})();</script>
 <script>try{var t=localStorage.getItem('gridlock.theme');if(t==='dark'||t==='light')document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
 
 </head>
